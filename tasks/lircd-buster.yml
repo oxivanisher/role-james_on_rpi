@@ -1,0 +1,53 @@
+---
+
+# Depricated, delete when evdev is working
+
+- name: putting lirc_options.conf in place
+  template :
+    src: lirc_options.conf.jinja2
+    dest: /etc/lirc/lirc_options.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart lircd
+
+- name: install lirc package for james2 and ignore errors due to bugs
+  ansible.builtin.package:
+    name: lirc
+    state: present
+  ignore_errors: true
+
+- name: ensure lircd.conf.d/ directory
+  ansible.builtin.file:
+    path: /etc/lirc/lircd.conf.d/*.conf
+    state: directory
+    owner: root
+    group: root
+    mode: 0644
+
+- name: check for default /etc/lirc/lircd.conf.d/devinput.lircd.conf file
+  stat:
+    path: /etc/lirc/lircd.conf.d/devinput.lircd.conf
+  register: devinput_stat
+
+- name: rename devinput.lircd.conf
+  ansible.builtin.command: mv /etc/lirc/lircd.conf.d/devinput.lircd.conf /etc/lirc/lircd.conf.d/devinput.lircd.conf.orig
+  when: devinput_stat.stat.exists
+  notify: restart lircd
+
+# this can be removed, once the buster package is fixed
+- name: installing lircd remotes
+  ansible.builtin.template:
+    src: lircd.conf.jinja2
+    dest: "/etc/lirc/lircd.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart lircd
+
+# this can be removed, once the buster package is fixed
+- name: install required JamesII packages
+  ansible.builtin.package:
+    name:
+      - lirc
+    state: present

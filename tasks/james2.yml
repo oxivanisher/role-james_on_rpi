@@ -1,0 +1,130 @@
+---
+
+- name: install required rpi packages
+  ansible.builtin.package:
+    name:
+      - build-essential
+      - git
+    state: present
+
+- name: install required JamesII packages
+  ansible.builtin.package:
+    name:
+      - python3-pip
+      - python3-dev
+      - python3-setuptools
+      - python3-virtualenv
+      - python3-venv
+    state: present
+
+- name: setup syslog rule for JamesII
+  ansible.builtin.copy:
+    src: james2.conf
+    dest: /etc/rsyslog.d/james2.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart rsyslog
+
+- name: ensuring JamesII folder
+  ansible.builtin.file:
+    state: directory
+    path: "{{ james2_install_dir }}"
+    owner: "{{ james_os_user }}"
+    group: "{{ james_os_user }}"
+    mode: 0755
+
+- name: ensuring JamesII source
+  ansible.builtin.git:
+    repo: 'https://github.com/oxivanisher/JamesII.git'
+    dest: "{{ james2_install_dir }}"
+    accept_hostkey: yes
+    update: yes
+    version: python3 #until its merged to master
+  become: yes
+  become_user: "{{ james_os_user }}"
+
+- name: fixing git permissions
+  ansible.builtin.file:
+    path: "{{ james2_install_dir }}/.git/FETCH_HEAD"
+    owner: "{{ james_os_user }}"
+    group: "{{ james_os_user }}"
+  ignore_errors: yes
+
+- name: install python requirements
+  ansible.builtin.pip:
+    requirements: "{{ james2_install_dir }}/requirements.txt"
+    virtualenv: "{{ james2_install_dir }}/venv"
+    virtualenv_command: /usr/bin/python3 -m venv
+
+- name: deploy broker cfg for JamesII
+  ansible.builtin.template:
+    src: broker.yaml.jinja2
+    dest: "{{ james2_install_dir }}/config/broker.yaml"
+    owner: "{{ james_os_user }}"
+    group: "{{ james_os_user }}"
+    mode: 0640
+  notify: restart james2
+
+- name: deploy sudo cfg for JamesII
+  ansible.builtin.template:
+    src: james2.jinja2
+    dest: /etc/sudoers.d/james2
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify: restart james2
+
+- name: looking up users
+  ansible.builtin.getent:
+    database: passwd
+
+- name: "configure james cli sudo for user {{ jump_host.user_name }}"
+  ansible.builtin.template:
+    src: james2-cli.jinja2
+    dest: /etc/sudoers.d/james2-cli
+    owner: "root"
+    group: "root"
+    mode: 0644
+  when: jump_host.user_name in getent_passwd
+
+# systemd
+- name: install JamesII systemd unit file
+  ansible.builtin.template:
+    src: james2.service.jinja2
+    dest: /etc/systemd/system/james2.service
+    owner: root
+    group: root
+    mode: 0755
+  when: ansible_service_mgr == "systemd"
+  notify: restart james2
+
+- name: reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  when: ansible_service_mgr == "systemd"
+
+- name: enable and start JamesII service
+  ansible.builtin.service:
+    name: james2.service
+    state: started
+    enabled: yes
+  when: ansible_service_mgr == "systemd"
+
+# upstart (thx and fuck you, xbian)
+- name: install JamesII upstart unit file
+  ansible.builtin.template:
+    src: james2.conf.jinja2
+    dest: /etc/init/james2.conf
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_service_mgr == "upstart"
+  notify: restart james2
+
+- name: start JamesII service
+  ansible.builtin.service:
+    name: james2
+    state: started
+    enabled: yes
+  when: ansible_service_mgr == "upstart"

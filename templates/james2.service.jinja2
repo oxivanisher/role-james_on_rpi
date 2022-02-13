@@ -1,0 +1,21 @@
+[Unit]
+Description=JamesII - Your personal butler
+After=network.target
+
+[Service]
+ExecStart=/bin/bash {{ james2_install_dir }}/src/james.sh
+WorkingDirectory={{ james2_install_dir }}/src/
+Restart=always
+RestartSec=5
+KillSignal=SIGTERM
+Type=simple
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=james2
+NotifyAccess=all
+User={{ james_os_user }}
+Group={{ james_os_user }}
+Nice=1
+
+[Install]
+WantedBy=multi-user.target

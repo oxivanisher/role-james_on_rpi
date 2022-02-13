@@ -1,0 +1,19 @@
+---
+
+# Depricated, delete when evdev is working
+
+- name: install lirc packages for james2 on xbian
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - xbian-package-lirc
+
+- name: installing lircd remotes
+  ansible.builtin.template:
+    src: lircd.conf.jinja2
+    dest: "/etc/lirc/lircd.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart lirc

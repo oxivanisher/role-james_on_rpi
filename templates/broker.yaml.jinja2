@@ -1,0 +1,9 @@
+vhost       : {{ james2_vhost }}
+host        : {{ james2_host }}
+password    : {{ james2_password }}
+port        : {{ james2_port }}
+fallbackport: {{ james2_fallbackport }}
+user        : {{ james2_user }}
+{% if james2_myhostname is defined -%}
+myhostname  : {{ james2_myhostname }}
+{% endif %}

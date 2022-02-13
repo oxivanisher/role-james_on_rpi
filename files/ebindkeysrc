@@ -1,0 +1,57 @@
+set PLAYPAUSE 164
+set VOLUMEDOWN 114
+set VOLUMEUP 115
+set NEXTSONG 163
+set PREVIOUSSONG 165
+
+set keyboard0 /dev/input/event0
+set keyboard1 /dev/input/event1
+
+event $keyboard0 ordered "$PLAYPAUSE" {
+  exec /usr/bin/mpc toggle
+}
+
+event $keyboard0 ordered "$VOLUMEDOWN" {
+  exec /usr/bin/mpc volume -1
+}
+
+event $keyboard0 ordered "$VOLUMEUP" {
+  exec /usr/bin/mpc volume +1
+}
+
+event $keyboard0 ordered "$NEXTSONG" {
+  exec /usr/bin/mpc next
+}
+
+event $keyboard0 ordered "$PREVIOUSSONG" {
+  # exec /usr/bin/mpc prev
+
+  exec /usr/bin/mpc clear
+  exec /usr/bin/mpc add http://mp3.radiobern1.ch/radiobern1128k
+  exec /usr/bin/mpc play
+
+}
+
+event $keyboard1 ordered "$PLAYPAUSE" {
+  exec /usr/bin/mpc toggle
+}
+
+event $keyboard1 ordered "$VOLUMEDOWN" {
+  exec /usr/bin/mpc volume -1
+}
+
+event $keyboard1 ordered "$VOLUMEUP" {
+  exec /usr/bin/mpc volume +1
+}
+
+event $keyboard1 ordered "$NEXTSONG" {
+  exec /usr/bin/mpc next
+}
+
+event $keyboard1 ordered "$PREVIOUSSONG" {
+  # exec /usr/bin/mpc prev
+
+  exec /usr/bin/mpc clear
+  exec /usr/bin/mpc add http://mp3.radiobern1.ch/radiobern1128k
+  exec /usr/bin/mpc play
+}

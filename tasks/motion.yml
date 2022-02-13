@@ -1,0 +1,7 @@
+---
+
+- name: install required JamesII packages
+  ansible.builtin.package:
+    name:
+      - motion
+    state: present

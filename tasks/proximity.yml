@@ -1,0 +1,24 @@
+---
+
+- name: install required bluetooth packages for james2
+  ansible.builtin.package:
+    name:
+      - bluetooth
+      - bluez
+      - libbluetooth-dev
+    state: present
+
+- name: enable and start bluetooth service
+  ansible.builtin.service:
+    name: bluetooth.service
+    state: started
+    enabled: yes
+  when: ansible_service_mgr == "systemd"
+
+- name: install python requirements for bluetooth
+  ansible.builtin.pip:
+    virtualenv_python: python3
+    name:
+      # revert to PyBluez when https://github.com/pybluez/pybluez/issues/416 is closed
+      - git+https://github.com/pybluez/pybluez.git@master
+    virtualenv: "{{ james2_install_dir }}/venv"

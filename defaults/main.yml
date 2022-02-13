@@ -1,0 +1,22 @@
+---
+
+james2_install_dir: /opt/JamesII
+james2_lirc_rx_pin: 25 #22
+james2_lirc_tx_pin: 4  #7
+james2_vhost: james2
+# james2_host: 10.5.20.4 #fixme with ipv6
+james2_host: james.thunderbluff.lan
+james2_password: Cighei3Y
+james2_port: 5672
+james2_fallbackport: 15672
+james2_user: james2
+james2_features:
+  - nothing
+#    - lircd
+#    - i2c
+#    - mpd
+#    - motion
+
+lircd_remotes: []
+
+lircd_default_device: auto

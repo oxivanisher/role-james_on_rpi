@@ -1,0 +1,27 @@
+#!upstart
+author "Marc Urben"
+description "JamesII Autostart"
+
+env USER={{ james_os_user }}
+env JPATH={{ james2_install_dir }}
+
+# should start after everything else is started
+start on started rc
+stop on shutdown
+
+console log
+
+# Restart the process if it dies with a signal
+# or exit code not given by the 'normal exit' stanza.
+respawn
+normal exit 255
+post-stop exec sleep 5
+
+# Give up if restart occurs 10 times in 90 seconds.
+respawn limit 10 90
+
+#expect fork
+
+script
+        exec $JPATH/src/james.sh
+end script
