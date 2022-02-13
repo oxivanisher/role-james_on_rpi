@@ -16,6 +16,7 @@ james2_features:
 #    - i2c
 #    - mpd
 #    - motion
+james2_cli_user: oxi
 
 lircd_remotes: []
 

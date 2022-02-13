@@ -79,14 +79,14 @@
   ansible.builtin.getent:
     database: passwd
 
-- name: "configure james cli sudo for user {{ jump_host.user_name }}"
+- name: "configure james cli sudo for user {{ james2_cli_user }}"
   ansible.builtin.template:
     src: james2-cli.jinja2
     dest: /etc/sudoers.d/james2-cli
     owner: "root"
     group: "root"
     mode: 0644
-  when: jump_host.user_name in getent_passwd
+  when: james2_cli_user in getent_passwd
 
 # systemd
 - name: install JamesII systemd unit file
