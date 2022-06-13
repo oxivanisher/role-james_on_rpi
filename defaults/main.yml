@@ -12,10 +12,10 @@ james2_fallbackport: 15672
 james2_user: james2
 james2_features:
   - nothing
-#    - lircd
-#    - i2c
-#    - mpd
-#    - motion
+  #  - lircd
+  #  - i2c
+  #  - mpd
+  #  - motion
 james2_cli_user: oxi
 
 lircd_remotes: []
