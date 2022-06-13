@@ -54,7 +54,7 @@
     path: /etc/mpd.conf
     regexp: '^bind_to_address'
     line: 'bind_to_address		"*"'
-    #line: 'bind_to_address		"/run/mpd/socket"'
+    # line: 'bind_to_address		"/run/mpd/socket"'
   notify: restart mpd
   ignore_errors: "{{ ansible_check_mode }}"
 
