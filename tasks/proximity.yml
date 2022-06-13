@@ -12,7 +12,7 @@
   ansible.builtin.service:
     name: bluetooth.service
     state: started
-    enabled: yes
+    enabled: true
   when: ansible_service_mgr == "systemd"
 
 - name: install python requirements for bluetooth

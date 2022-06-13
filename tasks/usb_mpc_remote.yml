@@ -31,7 +31,7 @@
   ansible.builtin.service:
     name: usb_mpc_remote
     state: started
-    enabled: yes
+    enabled: true
   when: ansible_service_mgr == "upstart"
 
 # systemd
@@ -46,12 +46,12 @@
 
 - name: reload systemd
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
   when: ansible_service_mgr == "systemd"
 
 - name: enable and start ebindkeys service
   ansible.builtin.service:
     name: ebindkeys.service
     state: started
-    enabled: yes
+    enabled: true
   when: ansible_service_mgr == "systemd"

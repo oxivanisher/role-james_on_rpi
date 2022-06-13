@@ -15,7 +15,7 @@
   ansible.builtin.apt:
     name: mpd
     default_release: stable-backports
-    update_cache: yes
+    update_cache: true
     state: present
 
 - name: install required mpd packages for james2
@@ -30,7 +30,7 @@
   user:
     name: '{{ james_os_user }}'
     groups: audio
-    append: yes
+    append: true
 
 # ensure mounted boot
 - name: mount boot
@@ -39,7 +39,7 @@
     state: mounted
     src: /dev/mmcblk0p1
     fstype: vfat
-  changed_when: False
+  changed_when: false
 
 - name: configure config.txt for lirc rx
   ansible.builtin.lineinfile:
@@ -68,27 +68,27 @@
 - name: set volume via amixer
   ansible.builtin.command: amixer set 'PCM' 98%
   changed_when: false
-  ignore_errors: True
+  ignore_errors: true
 
 - name: disable and stop mpd socket
   ansible.builtin.service:
     name: mpd.socket
     state: stopped
-    enabled: no
+    enabled: false
   when: ansible_service_mgr == "systemd"
 
 - name: enable and start mpd service
   ansible.builtin.service:
     name: mpd.service
     state: started
-    enabled: yes
+    enabled: true
   when: ansible_service_mgr == "systemd"
 
 - name: start mpd service
   ansible.builtin.service:
     name: mpd
     state: started
-    enabled: yes
+    enabled: true
   when: ansible_service_mgr == "upstart"
 
 - name: deploy pink noise file

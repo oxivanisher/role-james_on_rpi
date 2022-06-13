@@ -10,7 +10,7 @@
   user:
     name: '{{ james_os_user }}'
     groups: i2c
-    append: yes
+    append: true
 
 # ensure mounted boot
 - name: mount boot
@@ -19,7 +19,7 @@
     state: mounted
     src: /dev/mmcblk0p1
     fstype: vfat
-  changed_when: False
+  changed_when: false
 
 - name: configure config.txt for lirc rx
   ansible.builtin.lineinfile:
@@ -42,7 +42,7 @@
   user:
     name: '{{ james_os_user }}'
     groups: audio
-    append: yes
+    append: true
 
 - name: install python requirements for i2c
   ansible.builtin.pip:

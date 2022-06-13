@@ -38,10 +38,10 @@
   ansible.builtin.git:
     repo: 'https://github.com/oxivanisher/JamesII.git'
     dest: "{{ james2_install_dir }}"
-    accept_hostkey: yes
-    update: yes
+    accept_hostkey: true
+    update: true
     version: python3 #until its merged to master
-  become: yes
+  become: true
   become_user: "{{ james_os_user }}"
 
 - name: fixing git permissions
@@ -49,7 +49,7 @@
     path: "{{ james2_install_dir }}/.git/FETCH_HEAD"
     owner: "{{ james_os_user }}"
     group: "{{ james_os_user }}"
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: install python requirements
   ansible.builtin.pip:
@@ -101,14 +101,14 @@
 
 - name: reload systemd
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
   when: ansible_service_mgr == "systemd"
 
 - name: enable and start JamesII service
   ansible.builtin.service:
     name: james2.service
     state: started
-    enabled: yes
+    enabled: true
   when: ansible_service_mgr == "systemd"
 
 # upstart (thx and fuck you, xbian)
@@ -126,5 +126,5 @@
   ansible.builtin.service:
     name: james2
     state: started
-    enabled: yes
+    enabled: true
   when: ansible_service_mgr == "upstart"

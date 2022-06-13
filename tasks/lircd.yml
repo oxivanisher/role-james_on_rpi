@@ -16,7 +16,7 @@
     state: mounted
     src: /dev/mmcblk0p1
     fstype: vfat
-  changed_when: False
+  changed_when: false
 
 # configuring RPI GPIO
 - name: configure config.txt for lirc rx
