@@ -3,7 +3,7 @@
 # Depricated, delete when evdev is working
 
 - name: putting lirc_options.conf in place
-  template :
+  ansible.builtin.template:
     src: lirc_options.conf.jinja2
     dest: /etc/lirc/lirc_options.conf
     owner: root
@@ -26,7 +26,7 @@
     mode: 0644
 
 - name: check for default /etc/lirc/lircd.conf.d/devinput.lircd.conf file
-  stat:
+  ansible.builtin.stat:
     path: /etc/lirc/lircd.conf.d/devinput.lircd.conf
   register: devinput_stat
 

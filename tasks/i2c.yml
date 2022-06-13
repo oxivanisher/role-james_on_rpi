@@ -7,7 +7,7 @@
     state: present
 
 - name: adding existing user '{{ james_os_user }}' to group audio
-  user:
+  ansible.builtin.user:
     name: '{{ james_os_user }}'
     groups: i2c
     append: true
@@ -39,7 +39,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: adding existing user '{{ james_os_user }}' to group audio
-  user:
+  ansible.builtin.user:
     name: '{{ james_os_user }}'
     groups: audio
     append: true
