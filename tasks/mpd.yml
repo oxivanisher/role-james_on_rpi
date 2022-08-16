@@ -48,6 +48,7 @@
     line: "dtparam=audio=on"
   notify: reboot required
   ignore_errors: "{{ ansible_check_mode }}"
+  when: "'hifiberry' not in group_names"
 
 - name: configure config.txt for lirc rx
   ansible.builtin.lineinfile:
