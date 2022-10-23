@@ -26,7 +26,7 @@
       - mpc
     state: present
 
-- name: Adding existing user '{{ james_os_user }}' to group audio
+- name: "Adding existing user to group audio: {{ james_os_user }}"
   ansible.builtin.user:
     name: '{{ james_os_user }}'
     groups: audio
