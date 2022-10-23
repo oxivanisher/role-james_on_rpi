@@ -1,5 +1,6 @@
 galaxy_info:
   role_name: james_on_rpi
+  namespace: oxivanisher
   author: Marc Urben
   description: Deploy JamesII on RPis
   company: Thunderbluff

@@ -1,6 +1,6 @@
 ---
 
-- name: install required bluetooth packages for james2
+- name: Install required bluetooth packages for james2
   ansible.builtin.package:
     name:
       - bluetooth
@@ -8,14 +8,14 @@
       - libbluetooth-dev
     state: present
 
-- name: enable and start bluetooth service
+- name: Enable and start bluetooth service
   ansible.builtin.service:
     name: bluetooth.service
     state: started
     enabled: true
   when: ansible_service_mgr == "systemd"
 
-- name: install python requirements for bluetooth
+- name: Install python requirements for bluetooth
   ansible.builtin.pip:
     virtualenv_python: python3
     name:

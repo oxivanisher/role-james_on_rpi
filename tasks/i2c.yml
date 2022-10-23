@@ -1,19 +1,19 @@
 ---
 
-- name: install required JamesII packages
+- name: Install required JamesII packages
   ansible.builtin.package:
     name:
       - i2c-tools
     state: present
 
-- name: adding existing user '{{ james_os_user }}' to group audio
+- name: Adding existing user '{{ james_os_user }}' to group audio
   ansible.builtin.user:
     name: '{{ james_os_user }}'
     groups: i2c
     append: true
 
 # ensure mounted boot
-- name: mount boot
+- name: Mount boot
   ansible.posix.mount:
     path: /boot
     state: mounted
@@ -21,30 +21,30 @@
     fstype: vfat
   changed_when: false
 
-- name: configure config.txt for lirc rx
+- name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
     path: /boot/config.txt
     regexp: '^dtparam=i2c_arm='
     line: "dtparam=i2c_arm=on"
     insertafter: '^# Uncomment some or all of these to enable the optional hardware interfaces'
-  notify: reboot required
+  notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: ensure i2c_dev module is loaded
+- name: Ensure i2c_dev module is loaded
   ansible.builtin.lineinfile:
     path: /etc/modules
     regexp: '^i2c_dev'
     line: "i2c_dev"
-  notify: reboot required
+  notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: adding existing user '{{ james_os_user }}' to group audio
+- name: Adding existing user '{{ james_os_user }}' to group audio
   ansible.builtin.user:
     name: '{{ james_os_user }}'
     groups: audio
     append: true
 
-- name: install python requirements for i2c
+- name: Install python requirements for i2c
   ansible.builtin.pip:
     virtualenv_python: python3
     name:

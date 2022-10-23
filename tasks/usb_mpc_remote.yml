@@ -1,7 +1,7 @@
 ---
 
 # the lord and saviour http://vay8.net/ebindkeys#downloads
-- name: putting ebindkeysrc config in place
+- name: Putting ebindkeysrc config in place
   ansible.builtin.copy:
     src: ebindkeysrc
     dest: /etc/ebindkeysrc
@@ -9,7 +9,7 @@
     group: root
     mode: 0644
 
-- name: putting ebindkeysrc binary in place
+- name: Putting ebindkeysrc binary in place
   ansible.builtin.copy:
     src: ebindkeys-arm-static
     dest: /usr/local/bin/ebindkeys
@@ -18,7 +18,7 @@
     mode: 0755
 
 # upstart (thx and fuck you, xbian)
-- name: putting usb_mpc_remote upstart file in place
+- name: Putting usb_mpc_remote upstart file in place
   ansible.builtin.copy:
     src: usb_mpc_remote.conf
     dest: /etc/init/usb_mpc_remote.conf
@@ -27,7 +27,7 @@
     mode: 0644
   when: ansible_service_mgr == "upstart"
 
-- name: start usb_mpc_remote service
+- name: Start usb_mpc_remote service
   ansible.builtin.service:
     name: usb_mpc_remote
     state: started
@@ -35,7 +35,7 @@
   when: ansible_service_mgr == "upstart"
 
 # systemd
-- name: install ebindkeys systemd unit file
+- name: Install ebindkeys systemd unit file
   ansible.builtin.copy:
     src: ebindkeys.service
     dest: /etc/systemd/system/ebindkeys.service
@@ -44,12 +44,12 @@
     mode: 0755
   when: ansible_service_mgr == "systemd"
 
-- name: reload systemd
+- name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
   when: ansible_service_mgr == "systemd"
 
-- name: enable and start ebindkeys service
+- name: Enable and start ebindkeys service
   ansible.builtin.service:
     name: ebindkeys.service
     state: started

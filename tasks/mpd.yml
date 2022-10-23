@@ -1,24 +1,24 @@
 ---
 
-- name: add the Kaliko APT key
+- name: Add the Kaliko APT key
   ansible.builtin.apt_key:
     url: https://media.kaliko.me/kaliko.gpg
     state: present
 
-- name: add Kaliko Repository
+- name: Add Kaliko Repository
   ansible.builtin.apt_repository:
     repo: deb https://deb.kaliko.me/raspbian-backports/ stable-backports main
     state: present
     filename: kaliko
 
-- name: update apt cache for Kaliko repo
+- name: Update apt cache for Kaliko repo
   ansible.builtin.apt:
     name: mpd
     default_release: stable-backports
     update_cache: true
     state: present
 
-- name: install required mpd packages for james2
+- name: Install required mpd packages for james2
   ansible.builtin.package:
     name:
       - alsa-utils
@@ -26,14 +26,14 @@
       - mpc
     state: present
 
-- name: adding existing user '{{ james_os_user }}' to group audio
+- name: Adding existing user '{{ james_os_user }}' to group audio
   ansible.builtin.user:
     name: '{{ james_os_user }}'
     groups: audio
     append: true
 
 # ensure mounted boot
-- name: mount boot
+- name: Mount boot
   ansible.posix.mount:
     path: /boot
     state: mounted
@@ -41,58 +41,58 @@
     fstype: vfat
   changed_when: false
 
-- name: configure config.txt for lirc rx
+- name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
     path: /boot/config.txt
     regexp: '^dtparam=audio='
     line: "dtparam=audio=on"
-  notify: reboot required
+  notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
   when: "'hifiberry' not in group_names"
 
-- name: configure config.txt for lirc rx
+- name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
     path: /etc/mpd.conf
     regexp: '^bind_to_address'
     line: 'bind_to_address		"*"'
     # line: 'bind_to_address		"/run/mpd/socket"'
-  notify: restart mpd
+  notify: Restart mpd
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: fix logfile permissions
+- name: Fix logfile permissions
   ansible.builtin.file:
     path: /var/log/mpd/mpd.log
     owner: mpd
     group: audio
     mode: '0644'
 
-- name: set volume via amixer
+- name: Set volume via amixer
   ansible.builtin.command: amixer set 'PCM' 98%
   changed_when: false
   ignore_errors: true
 
-- name: disable and stop mpd socket
+- name: Disable and stop mpd socket
   ansible.builtin.service:
     name: mpd.socket
     state: stopped
     enabled: false
   when: ansible_service_mgr == "systemd"
 
-- name: enable and start mpd service
+- name: Enable and start mpd service
   ansible.builtin.service:
     name: mpd.service
     state: started
     enabled: true
   when: ansible_service_mgr == "systemd"
 
-- name: start mpd service
+- name: Start mpd service
   ansible.builtin.service:
     name: mpd
     state: started
     enabled: true
   when: ansible_service_mgr == "upstart"
 
-- name: deploy pink noise file
+- name: Deploy pink noise file
   ansible.builtin.copy:
     src: pink_noise.wav
     dest: /var/lib/mpd/music/pink_noise.wav
@@ -100,7 +100,7 @@
     group: root
     mode: '0644'
 
-- name: install python requirements for mpd
+- name: Install python requirements for mpd
   ansible.builtin.pip:
     name:
       - python-mpd2

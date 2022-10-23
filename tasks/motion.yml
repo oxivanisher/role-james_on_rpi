@@ -1,6 +1,6 @@
 ---
 
-- name: install required JamesII packages
+- name: Install required JamesII packages
   ansible.builtin.package:
     name:
       - motion

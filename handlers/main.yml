@@ -1,31 +1,31 @@
 ---
 
-- name: restart rsyslog
+- name: Restart rsyslog
   ansible.builtin.service:
     name: rsyslogd
     state: restarted
   ignore_errors: true
 
-- name: restart lircd
+- name: Restart lircd
   ansible.builtin.service:
     name: lircd
     state: restarted
 
-- name: restart lirc
+- name: Restart lirc
   ansible.builtin.service:
     name: lirc
     state: restarted
 
-- name: reboot required
+- name: Reboot required
   ansible.builtin.reboot:
     reboot_timeout: 300
 
-- name: restart mpd
+- name: Restart mpd
   ansible.builtin.service:
     name: mpd
     state: restarted
 
-- name: restart james2
+- name: Restart james2
   ansible.builtin.service:
     name: james2
     state: restarted

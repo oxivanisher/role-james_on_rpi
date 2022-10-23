@@ -1,7 +1,7 @@
 ---
 
 # ensure mounted boot
-- name: mount boot
+- name: Mount boot
   ansible.posix.mount:
     path: /boot
     state: mounted
@@ -10,16 +10,16 @@
   changed_when: false
 
 # get user
-- name: looking up users
+- name: Looking up users
   ansible.builtin.getent:
     database: passwd
 
-- name: setting default user to xbian
+- name: Setting default user to xbian
   ansible.builtin.set_fact:
     james_os_user: xbian
   when: ansible_distribution|lower == "xbian"
 
-- name: setting default user to pi
+- name: Setting default user to pi
   ansible.builtin.set_fact:
     james_os_user: pi
   when: ansible_distribution|lower == "debian"
@@ -27,38 +27,46 @@
 # Depricated, delete when evdev is working
 # also remove the no longer required lirc cfg files under templates
 # install lircd (plugin lirc-client)
-# - import_tasks: lircd.yml
+# - name: Import tasks from lircd.yml
+#   ansible.builtin.import_tasks: lircd.yml
 #   when: "'lircd' in james2_features"
 
-# - name: install python requirements virtualenv
+# - name: Install python requirements virtualenv
 #   ansible.builtin.pip:
 #     virtualenv_python: python3
 #     name:
 #       - virtualenv
 
 # install james2
-- import_tasks: james2.yml
+- name: Import tasks from james2.yml
+  ansible.builtin.import_tasks: james2.yml
 
 # install evdev (plugin evdev-client)
-- import_tasks: evdev.yml
+- name: Import tasks from evdev.yml
+  ansible.builtin.import_tasks: evdev.yml
   when: "'evdev' in james2_features"
 
 # install mpd (plugin mpd-client)
-- import_tasks: mpd.yml
+- name: Import tasks from mpd.yml
+  ansible.builtin.import_tasks: mpd.yml
   when: "'mpd' in james2_features"
 
 # install i2c (plugin rgb-led)
-- import_tasks: i2c.yml
+- name: Import tasks from i2c.yml
+  ansible.builtin.import_tasks: i2c.yml
   when: "'i2c' in james2_features"
 
 # configure usb_mpc_remote
-- import_tasks: usb_mpc_remote.yml
+- name: Import tasks from usb_mpc_remote.yml
+  ansible.builtin.import_tasks: usb_mpc_remote.yml
   when: "'usb_mpc_remote' in james2_features"
 
 # install motion (plugin motion)
-- import_tasks: motion.yml
+- name: Import tasks from motion.yml
+  ansible.builtin.import_tasks: motion.yml
   when: "'motion' in james2_features"
 
 # install bluetooth (plugin proximity)
-- import_tasks: proximity.yml
+- name: Import tasks from proximity.yml
+  ansible.builtin.import_tasks: proximity.yml
   when: "'proximity' in james2_features"
