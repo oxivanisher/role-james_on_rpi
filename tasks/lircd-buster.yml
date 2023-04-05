@@ -32,6 +32,7 @@
 
 - name: Rename devinput.lircd.conf
   ansible.builtin.command: mv /etc/lirc/lircd.conf.d/devinput.lircd.conf /etc/lirc/lircd.conf.d/devinput.lircd.conf.orig
+  changed_when: false
   when: devinput_stat.stat.exists
   notify: Restart lircd
 
