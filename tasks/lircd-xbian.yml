@@ -15,5 +15,5 @@
     dest: "/etc/lirc/lircd.conf"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: Restart lirc

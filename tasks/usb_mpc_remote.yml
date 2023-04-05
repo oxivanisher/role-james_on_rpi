@@ -7,7 +7,7 @@
     dest: /etc/ebindkeysrc
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: Putting ebindkeysrc binary in place
   ansible.builtin.copy:
@@ -15,7 +15,7 @@
     dest: /usr/local/bin/ebindkeys
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 # upstart (thx and fuck you, xbian)
 - name: Putting usb_mpc_remote upstart file in place
@@ -24,7 +24,7 @@
     dest: /etc/init/usb_mpc_remote.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when: ansible_service_mgr == "upstart"
 
 - name: Start usb_mpc_remote service
@@ -41,7 +41,7 @@
     dest: /etc/systemd/system/ebindkeys.service
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   when: ansible_service_mgr == "systemd"
 
 - name: Reload systemd

@@ -46,7 +46,7 @@
     dest: /etc/rc_keymaps/
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   loop: "{{ lircd_remotes }}"
   when: lircd_remotes is iterable
 

@@ -23,7 +23,7 @@
     dest: /etc/rsyslog.d/james2.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: Restart rsyslog
 
 - name: Ensuring JamesII folder
@@ -32,7 +32,7 @@
     path: "{{ james2_install_dir }}"
     owner: "{{ james_os_user }}"
     group: "{{ james_os_user }}"
-    mode: 0755
+    mode: "0755"
 
 - name: Ensuring JamesII source
   ansible.builtin.git:
@@ -49,7 +49,7 @@
     path: "{{ james2_install_dir }}/.git/FETCH_HEAD"
     owner: "{{ james_os_user }}"
     group: "{{ james_os_user }}"
-    mode: 0644
+    mode: "0644"
   ignore_errors: true
 
 - name: Install python requirements
@@ -64,7 +64,7 @@
     dest: "{{ james2_install_dir }}/config/broker.yaml"
     owner: "{{ james_os_user }}"
     group: "{{ james_os_user }}"
-    mode: 0640
+    mode: "0640"
   notify: Restart james2
 
 - name: Deploy sudo cfg for JamesII
@@ -73,7 +73,7 @@
     dest: /etc/sudoers.d/james2
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: "0644"
   notify: Restart james2
 
 - name: Looking up users
@@ -86,7 +86,7 @@
     dest: /etc/sudoers.d/james2-cli
     owner: "root"
     group: "root"
-    mode: 0644
+    mode: "0644"
   when: james2_cli_user in getent_passwd
 
 # systemd
@@ -96,7 +96,7 @@
     dest: /etc/systemd/system/james2.service
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
   when: ansible_service_mgr == "systemd"
   notify: Restart james2
 
@@ -119,7 +119,7 @@
     dest: /etc/init/james2.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   when: ansible_service_mgr == "upstart"
   notify: Restart james2
 

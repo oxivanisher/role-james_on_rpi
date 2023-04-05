@@ -8,7 +8,7 @@
     dest: /etc/lirc/lirc_options.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: Restart lircd
 
 - name: Install lirc package for james2 and ignore errors due to bugs
@@ -23,7 +23,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: Check for default /etc/lirc/lircd.conf.d/devinput.lircd.conf file
   ansible.builtin.stat:
@@ -42,7 +42,7 @@
     dest: "/etc/lirc/lircd.conf"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: Restart lircd
 
 # this can be removed, once the buster package is fixed
