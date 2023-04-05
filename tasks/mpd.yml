@@ -2,7 +2,7 @@
 
 - name: Add the Kaliko APT key
   ansible.builtin.apt_key:
-    url: https://media.kaliko.me/kaliko.gpg
+    url: https://kaliko.me/kaliko.gpg
     state: present
 
 - name: Add Kaliko Repository
