@@ -4,7 +4,7 @@
   ansible.builtin.service:
     name: rsyslogd
     state: restarted
-  ignore_errors: true
+  failed_when: false
 
 - name: Restart lircd
   ansible.builtin.service:

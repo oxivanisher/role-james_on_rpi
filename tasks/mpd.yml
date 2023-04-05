@@ -69,7 +69,7 @@
 - name: Set volume via amixer
   ansible.builtin.command: amixer set 'PCM' 98%
   changed_when: false
-  ignore_errors: true
+  failed_when: false
 
 - name: Disable and stop mpd socket
   ansible.builtin.service:

@@ -15,7 +15,7 @@
   ansible.builtin.package:
     name: lirc
     state: present
-  ignore_errors: true
+  failed_when: false
 
 - name: Ensure lircd.conf.d/ directory
   ansible.builtin.file:
