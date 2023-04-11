@@ -1,13 +1,24 @@
 ---
 
+- name: Remove old Kaliko APT key
+  ansible.builtin.apt_key:
+    id: 0x7039C52ACB694AE
+    state: absent
+
 - name: Add the Kaliko APT key
   ansible.builtin.apt_key:
     url: https://kaliko.me/kaliko.gpg
     state: present
 
-- name: Add Kaliko Repository
+- name: Remove Kaliko Repository
   ansible.builtin.apt_repository:
     repo: deb https://deb.kaliko.me/raspbian-backports/ stable-backports main
+    state: absent
+    filename: kaliko
+
+- name: Add Kaliko Repository
+  ansible.builtin.apt_repository:
+    repo: deb https://deb.kaliko.me/raspbian-backports/ bullseye-backports main
     state: present
     filename: kaliko
 
