@@ -6,7 +6,7 @@
 
 - name: Add Kaliko Repository
   ansible.builtin.apt_repository:
-    repo: "deb https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main"
+    repo: "deb [signed-by=/usr/share/keyrings/deb.kaliko.me.gpg] https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main"
     state: present
     filename: kaliko
 
