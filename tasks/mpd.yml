@@ -13,7 +13,7 @@
 - name: Update apt cache for Kaliko repo
   ansible.builtin.apt:
     name: mpd
-    default_release: stable-backports
+    default_release: "{{ ansible_distribution_release }}-backports"
     update_cache: true
     state: present
 
