@@ -38,8 +38,8 @@
   ignore_errors: "{{ ansible_check_mode }}"
 
 # install lircd (and workaround some bugs...)
-- name: Import tasks from lircd-buster.yml
-  ansible.builtin.import_tasks: lircd-buster.yml
+- name: Import tasks from lircd-debian.yml
+  ansible.builtin.import_tasks: lircd-debian.yml
   when: ansible_distribution|lower == "debian"
 
 - name: Import tasks from lircd-xbian.yml
