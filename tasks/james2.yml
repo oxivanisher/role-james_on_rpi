@@ -40,7 +40,7 @@
     dest: "{{ james2_install_dir }}"
     accept_hostkey: true
     update: true
-    version: python3 # until its merged to master
+    version: master
   become: true
   become_user: "{{ james_os_user }}"
 
