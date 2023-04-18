@@ -43,6 +43,7 @@
     version: feature/dont_wakup_during_vacation # will use master again
   become: true
   become_user: "{{ james_os_user }}"
+  notify: Restart james2
 
 - name: Fixing git permissions
   ansible.builtin.file:
