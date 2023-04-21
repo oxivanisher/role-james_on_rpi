@@ -17,6 +17,7 @@ james2_features:
   #  - mpd
   #  - motion
 james2_cli_user: oxi
+james2_git_branch: master
 
 lircd_remotes: []
 
