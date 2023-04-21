@@ -1,5 +1,4 @@
 ---
-
 - name: Add the Kaliko APT key by package
   ansible.builtin.apt:
     deb: https://deb.kaliko.me/kaliko-archive-keyring.deb
@@ -27,7 +26,7 @@
 
 - name: "Adding existing user to group audio: {{ james_os_user }}"
   ansible.builtin.user:
-    name: '{{ james_os_user }}'
+    name: "{{ james_os_user }}"
     groups: audio
     append: true
 
@@ -43,7 +42,7 @@
 - name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
     path: /boot/config.txt
-    regexp: '^dtparam=audio='
+    regexp: "^dtparam=audio="
     line: "dtparam=audio=on"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
@@ -52,7 +51,7 @@
 - name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
     path: /etc/mpd.conf
-    regexp: '^bind_to_address'
+    regexp: "^bind_to_address"
     line: 'bind_to_address		"*"'
     # line: 'bind_to_address		"/run/mpd/socket"'
   notify: Restart mpd
@@ -63,7 +62,7 @@
     path: /var/log/mpd/mpd.log
     owner: mpd
     group: audio
-    mode: '0644'
+    mode: "0644"
 
 - name: Set volume via amixer
   ansible.builtin.command: amixer set 'PCM' 98%
@@ -97,7 +96,7 @@
     dest: /var/lib/mpd/music/pink_noise.wav
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
 - name: Install python requirements for mpd
   ansible.builtin.pip:

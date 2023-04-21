@@ -1,5 +1,4 @@
 ---
-
 # the lord and saviour http://vay8.net/ebindkeys#downloads
 - name: Putting ebindkeysrc config in place
   ansible.builtin.copy:

@@ -1,5 +1,4 @@
 ---
-
 # the lirc package is ultimatively stupid and fails at installaion because the .dist file is not renamed to "non dist" if no other file is available ...
 # so, the lirc package can not be installed by ansible without very big fuckery ... sry you had to come here and find this comment ... AGAIN
 - name: Remove old lirc JamesII packages
@@ -25,18 +24,18 @@
 - name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
     path: /boot/config.txt
-    regexp: '^dtoverlay=gpio-ir,gpio_pin='
+    regexp: "^dtoverlay=gpio-ir,gpio_pin="
     line: "dtoverlay=gpio-ir,gpio_pin={{ james2_lirc_rx_pin }}"
-    insertafter: '^# Uncomment this to enable the lirc-rpi module'
+    insertafter: "^# Uncomment this to enable the lirc-rpi module"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Configure config.txt for lirc tx
   ansible.builtin.lineinfile:
     path: /boot/config.txt
-    regexp: '^dtoverlay=gpio-ir-tx,gpio_pin='
+    regexp: "^dtoverlay=gpio-ir-tx,gpio_pin="
     line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james2_lirc_tx_pin }}"
-    insertafter: '^dtoverlay=gpio-ir,gpio_pin'
+    insertafter: "^dtoverlay=gpio-ir,gpio_pin"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
 

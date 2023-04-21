@@ -1,5 +1,4 @@
 ---
-
 - name: Install required JamesII packages
   ansible.builtin.package:
     name:

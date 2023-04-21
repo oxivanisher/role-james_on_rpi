@@ -1,5 +1,4 @@
 ---
-
 # Depricated, delete when evdev is working
 
 - name: Putting lirc_options.conf in place

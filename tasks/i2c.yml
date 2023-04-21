@@ -1,5 +1,4 @@
 ---
-
 - name: Install required JamesII packages
   ansible.builtin.package:
     name:
@@ -8,7 +7,7 @@
 
 - name: "Adding existing user to group audio: {{ james_os_user }}"
   ansible.builtin.user:
-    name: '{{ james_os_user }}'
+    name: "{{ james_os_user }}"
     groups: i2c
     append: true
 
@@ -24,23 +23,23 @@
 - name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
     path: /boot/config.txt
-    regexp: '^dtparam=i2c_arm='
+    regexp: "^dtparam=i2c_arm="
     line: "dtparam=i2c_arm=on"
-    insertafter: '^# Uncomment some or all of these to enable the optional hardware interfaces'
+    insertafter: "^# Uncomment some or all of these to enable the optional hardware interfaces"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Ensure i2c_dev module is loaded
   ansible.builtin.lineinfile:
     path: /etc/modules
-    regexp: '^i2c_dev'
+    regexp: "^i2c_dev"
     line: "i2c_dev"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: "Adding existing user to group audio: {{ james_os_user }}"
   ansible.builtin.user:
-    name: '{{ james_os_user }}'
+    name: "{{ james_os_user }}"
     groups: audio
     append: true
 

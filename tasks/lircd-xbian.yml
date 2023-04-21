@@ -1,5 +1,4 @@
 ---
-
 # Depricated, delete when evdev is working
 
 - name: Install lirc packages for james2 on xbian

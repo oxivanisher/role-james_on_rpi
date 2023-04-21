@@ -1,5 +1,4 @@
 ---
-
 - name: Install required rpi packages
   ansible.builtin.package:
     name:
@@ -36,7 +35,7 @@
 
 - name: Ensuring JamesII source
   ansible.builtin.git:
-    repo: 'https://github.com/oxivanisher/JamesII.git'
+    repo: "https://github.com/oxivanisher/JamesII.git"
     dest: "{{ james2_install_dir }}"
     accept_hostkey: true
     update: true

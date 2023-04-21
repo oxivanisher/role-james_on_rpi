@@ -1,5 +1,4 @@
 ---
-
 # ensure mounted boot
 - name: Mount boot
   ansible.posix.mount:

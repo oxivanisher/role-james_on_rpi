@@ -1,5 +1,4 @@
 ---
-
 - name: Install required bluetooth packages for james2
   ansible.builtin.package:
     name:
