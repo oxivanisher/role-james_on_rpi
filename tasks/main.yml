@@ -65,7 +65,7 @@
   ansible.builtin.import_tasks: motion.yml
   when: "'motion' in james2_features"
 
-# install bluetooth (plugin proximity)
-- name: Import tasks from proximity.yml
-  ansible.builtin.import_tasks: proximity.yml
-  when: "'proximity' in james2_features"
+# install bluetooth (plugin presence)
+- name: Import tasks from btpresence.yml
+  ansible.builtin.import_tasks: btpresence.yml
+  when: "'btpresence' in james2_features"
