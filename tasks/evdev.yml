@@ -54,7 +54,7 @@
 
 - name: Locate the correct IR remote device
   ansible.builtin.command:
-    cmd: cat /proc/bus/input/devices | grep ir-receiver | cut -d "/" -f 6
+    cmd: "cat /proc/bus/input/devices | grep ir-receiver | cut -d / -f 6"
   register: evdev_rc_number
   changed_when: false
   failed_when: false
