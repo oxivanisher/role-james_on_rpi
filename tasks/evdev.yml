@@ -52,32 +52,22 @@
 - name: Flush handlers so the IR device is present for the next step
   ansible.builtin.meta: flush_handlers
 
-- name: Locate the correct IR remote device
+- name: Locate the correct IR remote device # noqa risky-shell-pipe
   ansible.builtin.shell: |
     /usr/bin/grep ir-receiver /proc/bus/input/devices | /usr/bin/cut -d / -f 6
   register: evdev_rc_number
   changed_when: false
   failed_when: false
 
-- name: lala
-  ansible.builtin.debug:
-    msg: "outout: {{ evdev_rc_number.stdout }}"
-
-- name: Display detected rc and fail if not found
-  ansible.builtin.set_fact:
-    evdev_rc_name: evdev_rc_number.stdout
-  failed_when: evdev_rc_number.stdout | length != 3
-
 - name: Configure remotes at boot
   ansible.builtin.cron:
     name: "Apply evdev keymap at reboot for {{ item }}"
     user: root
     special_time: reboot
-    job: "/usr/bin/ir-keytable -v -s {{ evdev_rc_name }} -c -w /etc/rc_keymaps/{{ item }} >/dev/null 2>&1"
+    job: "/usr/bin/ir-keytable -v -s {{ evdev_rc_number.stdout }} -c -w /etc/rc_keymaps/{{ item }} >/dev/null 2>&1"
   loop: "{{ lircd_remotes }}"
   when: lircd_remotes is iterable
-  # TODO missing when lircd_remotes is defined or so
-  # TODO rc0 or rc1 seems to change
+  failed_when: evdev_rc_number.stdout | length != 3
 
 - name: Install python requirements for evdev
   ansible.builtin.pip:
