@@ -61,8 +61,8 @@
 
 - name: Display detected rc and fail if not found
   ansible.builtin.set_fact:
-    evdev_rc_name: evdev_rc_number.output
-  failed_when: evdev_rc_number.output | length != 3
+    evdev_rc_name: evdev_rc_number.stdout
+  failed_when: evdev_rc_number.stdout  | length != 3
 
 - name: Configure remotes at boot
   ansible.builtin.cron:
