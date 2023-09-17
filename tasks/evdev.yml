@@ -53,27 +53,23 @@
   ansible.builtin.meta: flush_handlers
 
 - name: Locate the correct IR remote device
-  ansible.builtin.find:
-    paths: /sys/devices/platform/
-    recurse: yes
-    patterns: "rc[0-9]*"
-  register: rc_directories
+  ansible.builtin.command:
+    cmd: cat /proc/bus/input/devices | grep ir-receiver | cut -d "/" -f 6
+  register: evdev_rc_number
+  changed_when: false
+  failed_when: false
 
-- name: Extract rc directory names
-  set_fact:
-    rc_names: "{{ rc_directories.files | select('match', '^.*ir-receiver.*rc([0-9]+)$') | map('regex_replace', '^.*ir-receiver.*rc([0-9]+)$', '\\1') | list }}"
-  when: rc_directories.matched > 0
-
-- name: Display rc directory names
-  debug:
-    var: rc_names
+- name: Display detected rc and fail if not found
+  ansible.builtin.set_fact:
+    evdev_rc_name: evdev_rc_number.output
+  failed_when: evdev_rc_number.output | length != 3
 
 - name: Configure remotes at boot
   ansible.builtin.cron:
     name: "Apply evdev keymap at reboot for {{ item }}"
     user: root
     special_time: reboot
-    job: "/usr/bin/ir-keytable -v -s rc0 -c -w /etc/rc_keymaps/{{ item }} >/dev/null 2>&1"
+    job: "/usr/bin/ir-keytable -v -s {{ evdev_rc_name }} -c -w /etc/rc_keymaps/{{ item }} >/dev/null 2>&1"
   loop: "{{ lircd_remotes }}"
   when: lircd_remotes is iterable
   # TODO missing when lircd_remotes is defined or so
