@@ -1,7 +1,7 @@
 ---
 ## Backport from kaliko for buster and bullseye
 
-- name: Setup mpd for buster and bullseye
+- name: Setup mpd for buster and bullseye with kaliko repo for current mpd
   when: ansible_distribution_release in ['buster','bullseye']
   block:
     - name: Add the Kaliko APT key by package for buster and bullseye
@@ -22,6 +22,13 @@
         default_release: "{{ ansible_distribution_release }}-backports"
         update_cache: true
         state: present
+
+    - name: Fix logfile permissions
+      ansible.builtin.file:
+        path: /var/log/mpd/mpd.log
+        owner: mpd
+        group: audio
+        mode: "0644"
 
 ## "Normal" mpd install starting from bookworm
 
@@ -87,13 +94,6 @@
     # line: 'bind_to_address		"/run/mpd/socket"'
   notify: Restart mpd
   ignore_errors: "{{ ansible_check_mode }}"
-
-- name: Fix logfile permissions
-  ansible.builtin.file:
-    path: /var/log/mpd/mpd.log
-    owner: mpd
-    group: audio
-    mode: "0644"
 
 - name: Set volume via amixer
   ansible.builtin.command: amixer set 'PCM' 98%
