@@ -10,7 +10,9 @@
 
     - name: Add Kaliko Repository for buster and bullseye
       ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/deb.kaliko.me.gpg] https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main"
+        repo: >
+          "deb [signed-by=/usr/share/keyrings/deb.kaliko.me.gpg]
+          https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main"
         state: present
         filename: kaliko
 
@@ -33,7 +35,9 @@
 
     - name: Remove Kaliko Repository when not buster and bullseye
       ansible.builtin.apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/deb.kaliko.me.gpg] https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main"
+        repo: >
+          "deb [signed-by=/usr/share/keyrings/deb.kaliko.me.gpg]
+          https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main"
         state: absent
         filename: kaliko
 
