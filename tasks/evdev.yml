@@ -67,6 +67,7 @@
     job: "/usr/bin/ir-keytable -v -s {{ evdev_rc_number.stdout }} -c -w /etc/rc_keymaps/{{ item }} >/dev/null 2>&1"
   loop: "{{ lircd_remotes }}"
   when: lircd_remotes is iterable
+  notify: Reboot required
   failed_when: evdev_rc_number.stdout | length != 3
 
 - name: Install python requirements for evdev
