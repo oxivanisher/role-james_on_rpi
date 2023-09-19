@@ -58,7 +58,7 @@
   ansible.builtin.package:
     name:
       - alsa-utils
-      - espeak
+      - espeak-ng
       - mpc
     state: present
 
