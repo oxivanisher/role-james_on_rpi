@@ -54,7 +54,7 @@
     name: "Apply evdev keymap at reboot for {{ item }}"
     user: root
     special_time: reboot
-    job: |
+    job: >
       sleep 10 &&
       /usr/bin/ir-keytable -v
       -s $(/usr/bin/grep ir-receiver /proc/bus/input/devices | /usr/bin/cut -d / -f 6)
