@@ -63,7 +63,6 @@
   loop: "{{ lircd_remotes }}"
   when: lircd_remotes is iterable
   notify: Reboot required
-  failed_when: evdev_rc_number.stdout | length != 3
 
 - name: Flush handlers so the IR device is present for the next step
   ansible.builtin.meta: flush_handlers
