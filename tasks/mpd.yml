@@ -86,7 +86,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when: "'hifiberry' not in group_names"
 
-- name: Configure config.txt for lirc rx
+- name: Configure config.txt for lirc rx # noqa no-tabs
   ansible.builtin.lineinfile:
     path: /etc/mpd.conf
     regexp: "^bind_to_address"
