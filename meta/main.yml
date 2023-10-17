@@ -50,4 +50,5 @@ galaxy_info:
     - jamesii
 
 dependencies:
-  - role: ansible.posix.mount
+  []
+  # - role: ansible.posix.mount
