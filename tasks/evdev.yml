@@ -12,9 +12,14 @@
     state: present
 
 # ensure mounted boot
+- name: Override config.txt location for Raspberry Pi OS version before bookworm
+  ansible.builtin.set_fact:
+    james_on_rpi_config_dir: /boot
+  when: ansible_distribution_major_version | int < 12
+
 - name: Mount boot
   ansible.posix.mount:
-    path: /boot
+    path: "{{ james_on_rpi_config_dir }}"
     state: mounted
     src: /dev/mmcblk0p1
     fstype: vfat
@@ -23,7 +28,7 @@
 # configuring RPI GPIO
 - name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
-    path: /boot/config.txt
+    path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir,gpio_pin="
     line: "dtoverlay=gpio-ir,gpio_pin={{ james2_lirc_rx_pin }}"
     insertafter: "^# Uncomment this to enable the lirc-rpi module"
@@ -32,7 +37,7 @@
 
 - name: Configure config.txt for lirc tx
   ansible.builtin.lineinfile:
-    path: /boot/config.txt
+    path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir-tx,gpio_pin="
     line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james2_lirc_tx_pin }}"
     insertafter: "^dtoverlay=gpio-ir,gpio_pin"

@@ -1,13 +1,4 @@
 ---
-# ensure mounted boot
-- name: Mount boot
-  ansible.posix.mount:
-    path: /boot
-    state: mounted
-    src: /dev/mmcblk0p1
-    fstype: vfat
-  changed_when: false
-
 # get user
 - name: Looking up users
   ansible.builtin.getent:

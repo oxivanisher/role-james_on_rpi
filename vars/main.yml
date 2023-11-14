@@ -1,2 +1,3 @@
 ---
 # vars file for james_on_rpi
+james_on_rpi_config_dir: /boot/firmware
