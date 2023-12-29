@@ -54,18 +54,34 @@
   loop: "{{ lircd_remotes }}"
   when: lircd_remotes is iterable
 
-- name: Configure remotes at boot
+- name: Start with a clean keymap at boot
   ansible.builtin.cron:
-    name: "Apply evdev keymap at reboot for {{ item }}"
+    name: "Clean evdev keymap at reboot"
     user: root
     special_time: reboot
     job: >
       sleep 10 &&
       /usr/bin/ir-keytable -v
       -s $(/usr/bin/grep ir-receiver /proc/bus/input/devices | /usr/bin/cut -d / -f 6)
-      -c -w /etc/rc_keymaps/{{ item }}
+      -c
+      >/dev/null 2>&1
+  when: lircd_remotes is iterable
+  notify: Reboot required
+
+- name: Configure remotes at boot
+  ansible.builtin.cron:
+    name: "Apply evdev keymap at reboot for {{ item }}"
+    user: root
+    special_time: reboot
+    job: >
+      sleep {{ 12 | int + my_idx }} &&
+      /usr/bin/ir-keytable -v
+      -s $(/usr/bin/grep ir-receiver /proc/bus/input/devices | /usr/bin/cut -d / -f 6)
+      -w /etc/rc_keymaps/{{ item }}
       >/dev/null 2>&1
   loop: "{{ lircd_remotes }}"
+  loop_control:
+    index_var: my_idx
   when: lircd_remotes is iterable
   notify: Reboot required
 
