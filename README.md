@@ -1,7 +1,9 @@
-Role Name
-=========
+james_on_rpi
+============
 
-A brief description of the role goes here.
+This role installs and configures [JamesII](https://github.com/oxivanisher/JamesII) nodes on Raspberry Pis.
+
+This role is in the [oxivanisher/raspberry_pi](https://github.com/oxivanisher/collection-raspberry_pi) Ansible galaxy collection.
 
 Requirements
 ------------
