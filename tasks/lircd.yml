@@ -27,7 +27,7 @@
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir,gpio_pin="
-    line: "dtoverlay=gpio-ir,gpio_pin={{ james2_lirc_rx_pin }}"
+    line: "dtoverlay=gpio-ir,gpio_pin={{ james2_gpio_ir_rx_pin }}"
     insertafter: "^# Uncomment this to enable the lirc-rpi module"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
@@ -36,7 +36,7 @@
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir-tx,gpio_pin="
-    line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james2_lirc_tx_pin }}"
+    line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james2_gpio_ir_tx_pin }}"
     insertafter: "^dtoverlay=gpio-ir,gpio_pin"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"

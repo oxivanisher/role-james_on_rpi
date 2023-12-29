@@ -1,23 +1,28 @@
 ---
 james2_install_dir: /opt/JamesII
-james2_lirc_rx_pin: 25 # 22
-james2_lirc_tx_pin: 4 # 7
+james2_cli_user: pi
+james2_git_branch: master
+
+james2_host: james.example.lan
 james2_vhost: james2
-# james2_host: 10.5.20.4 # fixme with ipv6
-james2_host: james.thunderbluff.lan
-james2_password: Cighei3Y
+james2_user: james2
+james2_password: YOURPASSWORD
 james2_port: 5672
 james2_fallbackport: 15672
-james2_user: james2
+
 james2_features:
   []
   # - lircd
   # - i2c
   # - mpd
   # - motion
-james2_cli_user: oxi
-james2_git_branch: master
+  # - evdev
+  # - usb_mpc_remote
+  # - btpresence
 
-lircd_remotes: []
+james2_gpio_ir_rx_pin: 25
+james2_gpio_ir_tx_pin: 4
 
-lircd_default_device: auto
+james2_evdev_remotes: []
+
+james2_lircd_default_device: auto

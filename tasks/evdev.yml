@@ -1,5 +1,5 @@
 ---
-# the lirc package is ultimatively stupid and fails at installaion because the .dist file is not renamed to "non dist" if no other file is available ...
+# the lirc package is ultimatively stupid and fails at installation because the .dist file is not renamed to "non dist" if no other file is available ...
 # so, the lirc package can not be installed by ansible without very big fuckery ... sry you had to come here and find this comment ... AGAIN
 - name: Remove old lirc JamesII packages
   ansible.builtin.package:
@@ -30,7 +30,7 @@
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir,gpio_pin="
-    line: "dtoverlay=gpio-ir,gpio_pin={{ james2_lirc_rx_pin }}"
+    line: "dtoverlay=gpio-ir,gpio_pin={{ james2_gpio_ir_rx_pin }}"
     insertafter: "^# Uncomment this to enable the lirc-rpi module"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
@@ -39,7 +39,7 @@
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir-tx,gpio_pin="
-    line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james2_lirc_tx_pin }}"
+    line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james2_gpio_ir_tx_pin }}"
     insertafter: "^dtoverlay=gpio-ir,gpio_pin"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
@@ -51,8 +51,8 @@
     owner: root
     group: root
     mode: "0644"
-  loop: "{{ lircd_remotes }}"
-  when: lircd_remotes is iterable
+  loop: "{{ james2_evdev_remotes }}"
+  when: james2_evdev_remotes is iterable
 
 - name: Start with a clean keymap at boot
   ansible.builtin.cron:
@@ -65,7 +65,7 @@
       -s $(/usr/bin/grep ir-receiver /proc/bus/input/devices | /usr/bin/cut -d / -f 6)
       -c
       >/dev/null 2>&1
-  when: lircd_remotes is iterable
+  when: james2_evdev_remotes is iterable
   notify: Reboot required
 
 - name: Configure remotes at boot
@@ -79,10 +79,10 @@
       -s $(/usr/bin/grep ir-receiver /proc/bus/input/devices | /usr/bin/cut -d / -f 6)
       -w /etc/rc_keymaps/{{ item }}
       >/dev/null 2>&1
-  loop: "{{ lircd_remotes }}"
+  loop: "{{ james2_evdev_remotes }}"
   loop_control:
     index_var: my_idx
-  when: lircd_remotes is iterable
+  when: james2_evdev_remotes is iterable
   notify: Reboot required
 
 - name: Flush handlers so the IR device is present for the next step
