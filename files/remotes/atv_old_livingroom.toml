@@ -1,0 +1,11 @@
+[[protocols]]
+name = "atv_old_remote"
+protocol = "nec"
+variant = "nec-32"
+[protocols.scancodes]
+0x87eec40a = "KEY_UP"
+0x87eec409 = "KEY_LEFT"
+0x87eec406 = "KEY_RIGHT"
+0x87eec40c = "KEY_DOWN"
+0x87eec403 = "KEY_MENU"
+0x87eec405 = "KEY_PLAYPAUSE"
