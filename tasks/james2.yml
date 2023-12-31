@@ -55,6 +55,8 @@
     requirements: "{{ james2_install_dir }}/requirements.txt"
     virtualenv: "{{ james2_install_dir }}/venv"
     virtualenv_command: /usr/bin/python3 -m venv
+  become: true
+  become_user: "{{ james_os_user }}"
 
 - name: Deploy broker cfg for JamesII
   ansible.builtin.template:
