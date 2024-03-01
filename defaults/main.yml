@@ -26,3 +26,5 @@ james2_gpio_ir_tx_pin: 4
 james2_evdev_remotes: []
 
 james2_lircd_default_device: auto
+
+raspberry_pi_boot_dev: /dev/mmcblk0p1

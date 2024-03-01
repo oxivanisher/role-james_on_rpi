@@ -18,7 +18,7 @@
   ansible.posix.mount:
     path: "{{ james_on_rpi_config_dir }}"
     state: mounted
-    src: /dev/mmcblk0p1
+    src: "{{ raspberry_pi_boot_dev }}"
     fstype: vfat
   changed_when: false
 
