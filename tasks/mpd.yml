@@ -7,6 +7,8 @@
     - name: Add the Kaliko APT key by package for buster and bullseye
       ansible.builtin.apt:
         deb: https://deb.kaliko.me/kaliko-archive-keyring.deb
+      become: true
+      become_user: root
 
     - name: Add Kaliko Repository for buster and bullseye
       ansible.builtin.apt_repository:
@@ -15,6 +17,8 @@
           https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main
         state: present
         filename: kaliko
+      become: true
+      become_user: root
 
     - name: Update apt cache for Kaliko repo in buster and bullseye
       ansible.builtin.apt:
@@ -22,6 +26,8 @@
         default_release: "{{ ansible_distribution_release }}-backports"
         update_cache: true
         state: present
+      become: true
+      become_user: root
 
     - name: Fix logfile permissions
       ansible.builtin.file:
@@ -29,6 +35,8 @@
         owner: mpd
         group: audio
         mode: "0644"
+      become: true
+      become_user: root
 
 ## "Normal" mpd install starting from bookworm
 
@@ -39,6 +47,8 @@
       ansible.builtin.apt:
         name: kaliko-archive-keyring
         state: absent
+      become: true
+      become_user: root
 
     - name: Remove Kaliko Repository when not buster and bullseye
       ansible.builtin.apt_repository:
@@ -47,12 +57,16 @@
           https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main
         state: absent
         filename: kaliko
+      become: true
+      become_user: root
 
     - name: Update apt cache for Kaliko repo in buster and bullseye
       ansible.builtin.apt:
         name: mpd
         update_cache: true
         state: present
+      become: true
+      become_user: root
 
 - name: Install required mpd packages for james2
   ansible.builtin.package:
@@ -61,12 +75,16 @@
       - espeak-ng
       - mpc
     state: present
+  become: true
+  become_user: root
 
 - name: "Adding existing user to group audio: {{ james_os_user }}"
   ansible.builtin.user:
     name: "{{ james_os_user }}"
     groups: audio
     append: true
+  become: true
+  become_user: root
 
 # ensure mounted boot
 - name: Override config.txt location for Raspberry Pi OS version before bookworm
@@ -81,6 +99,8 @@
     src: "{{ raspberry_pi_boot_dev }}"
     fstype: vfat
   changed_when: false
+  become: true
+  become_user: root
 
 - name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
@@ -90,6 +110,8 @@
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
   when: "'hifiberry' not in group_names"
+  become: true
+  become_user: root
 
 - name: Configure config.txt for lirc rx # noqa no-tabs
   ansible.builtin.lineinfile:
@@ -99,11 +121,15 @@
     # line: 'bind_to_address		"/run/mpd/socket"'
   notify: Restart mpd
   ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
 
 - name: Set volume via amixer
   ansible.builtin.command: amixer set 'PCM' 98%
   changed_when: false
   failed_when: false
+  become: true
+  become_user: root
 
 - name: Disable and stop mpd socket
   ansible.builtin.service:
@@ -111,6 +137,8 @@
     state: stopped
     enabled: false
   when: ansible_service_mgr == "systemd"
+  become: true
+  become_user: root
 
 - name: Enable and start mpd service
   ansible.builtin.service:
@@ -118,6 +146,8 @@
     state: started
     enabled: true
   when: ansible_service_mgr == "systemd"
+  become: true
+  become_user: root
 
 - name: Start mpd service
   ansible.builtin.service:
@@ -125,6 +155,8 @@
     state: started
     enabled: true
   when: ansible_service_mgr == "upstart"
+  become: true
+  become_user: root
 
 - name: Deploy pink noise file
   ansible.builtin.copy:
@@ -133,9 +165,13 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
+  become_user: root
 
 - name: Install python requirements for mpd
   ansible.builtin.pip:
     name:
       - python-mpd2
     virtualenv: "{{ james2_install_dir }}/venv"
+  become: true
+  become_user: "{{ james_os_user }}"

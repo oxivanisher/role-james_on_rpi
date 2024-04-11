@@ -5,11 +5,15 @@
   ansible.builtin.package:
     name: lirc
     state: absent
+  become: true
+  become_user: root
 
 - name: Install required packages
   ansible.builtin.package:
     name: ir-keytable
     state: present
+  become: true
+  become_user: root
 
 # ensure mounted boot
 - name: Override config.txt location for Raspberry Pi OS version before bookworm
@@ -24,6 +28,8 @@
     src: "{{ raspberry_pi_boot_dev }}"
     fstype: vfat
   changed_when: false
+  become: true
+  become_user: root
 
 # configuring RPI GPIO
 - name: Configure config.txt for lirc rx
@@ -34,6 +40,8 @@
     insertafter: "^# Uncomment this to enable the lirc-rpi module"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
 
 - name: Configure config.txt for lirc tx
   ansible.builtin.lineinfile:
@@ -43,6 +51,8 @@
     insertafter: "^dtoverlay=gpio-ir,gpio_pin"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
 
 - name: Put remote configs in place
   ansible.builtin.copy:
@@ -53,6 +63,8 @@
     mode: "0644"
   loop: "{{ james2_evdev_remotes }}"
   when: james2_evdev_remotes is iterable
+  become: true
+  become_user: root
 
 - name: Start with a clean keymap at boot
   ansible.builtin.cron:
@@ -67,6 +79,8 @@
       >/dev/null 2>&1
   when: james2_evdev_remotes is iterable
   notify: Reboot required
+  become: true
+  become_user: root
 
 - name: Configure remotes at boot
   ansible.builtin.cron:
@@ -84,6 +98,8 @@
     index_var: my_idx
   when: james2_evdev_remotes is iterable
   notify: Reboot required
+  become: true
+  become_user: root
 
 - name: Flush handlers so the IR device is present for the next step
   ansible.builtin.meta: flush_handlers
@@ -93,3 +109,5 @@
     name:
       - evdev
     virtualenv: "{{ james2_install_dir }}/venv"
+  become: true
+  become_user: "{{ james_os_user }}"

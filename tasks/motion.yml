@@ -1,6 +1,7 @@
 ---
 - name: Install required JamesII packages
   ansible.builtin.package:
-    name:
-      - motion
+    name: motion
     state: present
+  become: true
+  become_user: root

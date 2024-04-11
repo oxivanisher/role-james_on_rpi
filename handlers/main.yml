@@ -4,27 +4,39 @@
     name: rsyslogd
     state: restarted
   failed_when: false
+  become: true
+  become_user: root
 
 - name: Restart lircd
   ansible.builtin.service:
     name: lircd
     state: restarted
+  become: true
+  become_user: root
 
 - name: Restart lirc
   ansible.builtin.service:
     name: lirc
     state: restarted
+  become: true
+  become_user: root
 
 - name: Reboot required
   ansible.builtin.reboot:
     reboot_timeout: 300
+  become: true
+  become_user: root
 
 - name: Restart mpd
   ansible.builtin.service:
     name: mpd
     state: restarted
+  become: true
+  become_user: root
 
 - name: Restart james2
   ansible.builtin.service:
     name: james2
     state: restarted
+  become: true
+  become_user: root

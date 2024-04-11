@@ -6,6 +6,8 @@
       - bluez
       - libbluetooth-dev
     state: present
+  become: true
+  become_user: root
 
 - name: Enable and start bluetooth service
   ansible.builtin.service:
@@ -13,6 +15,8 @@
     state: started
     enabled: true
   when: ansible_service_mgr == "systemd"
+  become: true
+  become_user: root
 
 - name: Install python requirements for bluetooth
   ansible.builtin.pip:
@@ -21,3 +25,5 @@
       # revert to PyBluez when https://github.com/pybluez/pybluez/issues/416 is closed
       - git+https://github.com/pybluez/pybluez.git@master
     virtualenv: "{{ james2_install_dir }}/venv"
+  become: true
+  become_user: root

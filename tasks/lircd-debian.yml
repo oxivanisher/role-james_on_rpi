@@ -9,12 +9,16 @@
     group: root
     mode: "0644"
   notify: Restart lircd
+  become: true
+  become_user: root
 
 - name: Install lirc package for james2 and ignore errors due to bugs
   ansible.builtin.package:
     name: lirc
     state: present
   failed_when: false
+  become: true
+  become_user: root
 
 - name: Ensure lircd.conf.d/ directory
   ansible.builtin.file:
@@ -23,17 +27,23 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
+  become_user: root
 
 - name: Check for default /etc/lirc/lircd.conf.d/devinput.lircd.conf file
   ansible.builtin.stat:
     path: /etc/lirc/lircd.conf.d/devinput.lircd.conf
   register: devinput_stat
+  become: true
+  become_user: root
 
 - name: Rename devinput.lircd.conf
   ansible.builtin.command: mv /etc/lirc/lircd.conf.d/devinput.lircd.conf /etc/lirc/lircd.conf.d/devinput.lircd.conf.orig
   changed_when: false
   when: devinput_stat.stat.exists
   notify: Restart lircd
+  become: true
+  become_user: root
 
 # this can be removed, once the buster package is fixed
 - name: Installing lircd remotes
@@ -44,10 +54,13 @@
     group: root
     mode: "0644"
   notify: Restart lircd
+  become: true
+  become_user: root
 
 # this can be removed, once the buster package is fixed
 - name: Install required JamesII packages
   ansible.builtin.package:
-    name:
-      - lirc
+    name: lirc
     state: present
+  become: true
+  become_user: root

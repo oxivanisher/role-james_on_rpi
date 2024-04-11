@@ -4,6 +4,8 @@
     name:
       - i2c-tools
     state: present
+  become: true
+  become_user: root
 
 - name: "Adding existing user to group audio: {{ james_os_user }}"
   ansible.builtin.user:

@@ -7,6 +7,8 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
+  become_user: root
 
 - name: Putting ebindkeysrc binary in place
   ansible.builtin.copy:
@@ -15,6 +17,8 @@
     owner: root
     group: root
     mode: "0755"
+  become: true
+  become_user: root
 
 # upstart (thx and fuck you, xbian)
 - name: Putting usb_mpc_remote upstart file in place
@@ -25,6 +29,8 @@
     group: root
     mode: "0644"
   when: ansible_service_mgr == "upstart"
+  become: true
+  become_user: root
 
 - name: Start usb_mpc_remote service
   ansible.builtin.service:
@@ -32,6 +38,8 @@
     state: started
     enabled: true
   when: ansible_service_mgr == "upstart"
+  become: true
+  become_user: root
 
 # systemd
 - name: Install ebindkeys systemd unit file
@@ -42,11 +50,15 @@
     group: root
     mode: "0755"
   when: ansible_service_mgr == "systemd"
+  become: true
+  become_user: root
 
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
   when: ansible_service_mgr == "systemd"
+  become: true
+  become_user: root
 
 - name: Enable and start ebindkeys service
   ansible.builtin.service:
@@ -54,3 +66,5 @@
     state: started
     enabled: true
   when: ansible_service_mgr == "systemd"
+  become: true
+  become_user: root

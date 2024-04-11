@@ -8,11 +8,15 @@
   ansible.builtin.set_fact:
     james_os_user: xbian
   when: ansible_distribution|lower == "xbian"
+  become: true
+  become_user: root
 
 - name: Setting default user to pi
   ansible.builtin.set_fact:
     james_os_user: pi
   when: ansible_distribution|lower == "debian"
+  become: true
+  become_user: root
 
 # Depricated, delete when evdev is working
 # also remove the no longer required lirc cfg files under templates
