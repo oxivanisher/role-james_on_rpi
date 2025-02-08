@@ -1,5 +1,6 @@
 james_on_rpi
 ============
+[![Ansible Lint](https://github.com/oxivanisher/role-james_on_rpi/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-james_on_rpi/actions/workflows/ansible-lint.yml)
 
 This role installs and configures [JamesII](https://github.com/oxivanisher/JamesII) nodes on Raspberry Pis.
 
