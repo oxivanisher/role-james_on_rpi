@@ -3,8 +3,8 @@ Description=JamesII - Your personal butler
 After=network.target
 
 [Service]
-ExecStart=/bin/bash {{ james2_install_dir }}/src/james.sh
-WorkingDirectory={{ james2_install_dir }}/src/
+ExecStart=/bin/bash {{ james_on_rpi_install_dir }}/src/james.sh
+WorkingDirectory={{ james_on_rpi_install_dir }}/src/
 Restart=always
 RestartSec=5
 KillSignal=SIGTERM

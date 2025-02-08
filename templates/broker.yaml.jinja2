@@ -1,9 +1,9 @@
-vhost       : {{ james2_vhost }}
-host        : {{ james2_host }}
-password    : {{ james2_password }}
-port        : {{ james2_port }}
-fallbackport: {{ james2_fallbackport }}
-user        : {{ james2_user }}
+vhost       : {{ james_on_rpi_rabbitmq_vhost }}
+host        : {{ james_on_rpi_rabbitmq_server }}
+password    : {{ james_on_rpi_rabbitmq_password }}
+port        : {{ james_on_rpi_rabbitmq_port }}
+fallbackport: {{ james_on_rpi_rabbitmq_fallbackport }}
+user        : {{ james_on_rpi_rabbitmq_user }}
 {% if james2_myhostname is defined -%}
 myhostname  : {{ james2_myhostname }}
 {% endif %}

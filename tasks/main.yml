@@ -23,7 +23,7 @@
 # install lircd (plugin lirc-client)
 # - name: Import tasks from lircd.yml
 #   ansible.builtin.import_tasks: lircd.yml
-#   when: "'lircd' in james2_features"
+#   when: "'lircd' in james_on_rpi_features"
 
 # - name: Install python requirements virtualenv
 #   ansible.builtin.pip:
@@ -38,29 +38,29 @@
 # install evdev (plugin evdev-client)
 - name: Import tasks from evdev.yml
   ansible.builtin.import_tasks: evdev.yml
-  when: "'evdev' in james2_features"
+  when: "'evdev' in james_on_rpi_features"
 
 # install mpd (plugin mpd-client)
 - name: Import tasks from mpd.yml
   ansible.builtin.import_tasks: mpd.yml
-  when: "'mpd' in james2_features"
+  when: "'mpd' in james_on_rpi_features"
 
 # install i2c (plugin rgb-led)
 - name: Import tasks from i2c.yml
   ansible.builtin.import_tasks: i2c.yml
-  when: "'i2c' in james2_features"
+  when: "'i2c' in james_on_rpi_features"
 
 # configure usb_mpc_remote
 - name: Import tasks from usb_mpc_remote.yml
   ansible.builtin.import_tasks: usb_mpc_remote.yml
-  when: "'usb_mpc_remote' in james2_features"
+  when: "'usb_mpc_remote' in james_on_rpi_features"
 
 # install motion (plugin motion)
 - name: Import tasks from motion.yml
   ansible.builtin.import_tasks: motion.yml
-  when: "'motion' in james2_features"
+  when: "'motion' in james_on_rpi_features"
 
 # install bluetooth (plugin presence)
 - name: Import tasks from btpresence.yml
   ansible.builtin.import_tasks: btpresence.yml
-  when: "'btpresence' in james2_features"
+  when: "'btpresence' in james_on_rpi_features"

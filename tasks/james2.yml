@@ -32,7 +32,7 @@
 - name: Ensuring JamesII folder
   ansible.builtin.file:
     state: directory
-    path: "{{ james2_install_dir }}"
+    path: "{{ james_on_rpi_install_dir }}"
     owner: "{{ james_os_user }}"
     group: "{{ james_os_user }}"
     mode: "0755"
@@ -42,17 +42,17 @@
 - name: Ensuring JamesII source
   ansible.builtin.git:
     repo: "https://github.com/oxivanisher/JamesII.git"
-    dest: "{{ james2_install_dir }}"
+    dest: "{{ james_on_rpi_install_dir }}"
     accept_hostkey: true
     update: true
-    version: "{{ james2_git_branch }}"
+    version: "{{ james_on_rpi_git_branch }}"
   become: true
   become_user: "{{ james_os_user }}"
   notify: Restart james2
 
 - name: Fixing git permissions
   ansible.builtin.file:
-    path: "{{ james2_install_dir }}/.git/FETCH_HEAD"
+    path: "{{ james_on_rpi_install_dir }}/.git/FETCH_HEAD"
     owner: "{{ james_os_user }}"
     group: "{{ james_os_user }}"
     mode: "0644"
@@ -62,8 +62,8 @@
 
 - name: Install python requirements
   ansible.builtin.pip:
-    requirements: "{{ james2_install_dir }}/requirements.txt"
-    virtualenv: "{{ james2_install_dir }}/venv"
+    requirements: "{{ james_on_rpi_install_dir }}/requirements.txt"
+    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
     virtualenv_command: /usr/bin/python3 -m venv
   become: true
   become_user: "{{ james_os_user }}"
@@ -71,7 +71,7 @@
 - name: Deploy broker cfg for JamesII
   ansible.builtin.template:
     src: broker.yaml.jinja2
-    dest: "{{ james2_install_dir }}/config/broker.yaml"
+    dest: "{{ james_on_rpi_install_dir }}/config/broker.yaml"
     owner: "{{ james_os_user }}"
     group: "{{ james_os_user }}"
     mode: "0640"
@@ -94,14 +94,14 @@
   ansible.builtin.getent:
     database: passwd
 
-- name: "Configure james cli sudo for user {{ james2_cli_user }}"
+- name: "Configure james cli sudo for user {{ james_on_rpi_cli_user }}"
   ansible.builtin.template:
     src: james2-cli.jinja2
     dest: /etc/sudoers.d/james2-cli
     owner: "root"
     group: "root"
     mode: "0644"
-  when: james2_cli_user in getent_passwd
+  when: james_on_rpi_cli_user in getent_passwd
   become: true
   become_user: root
 

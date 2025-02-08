@@ -172,6 +172,6 @@
   ansible.builtin.pip:
     name:
       - python-mpd2
-    virtualenv: "{{ james2_install_dir }}/venv"
+    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
   become: true
   become_user: "{{ james_os_user }}"

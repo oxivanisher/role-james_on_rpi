@@ -21,11 +21,16 @@
     james_on_rpi_config_dir: /boot
   when: ansible_distribution_major_version | int < 12
 
+- name: Override Raspberry PI boot device default since raspberry_pi_boot_dev is set
+  ansible.builtin.set_fact:
+    james_on_rpi_rpi_boot_dev: "{{ raspberry_pi_boot_dev }}"
+  when: raspberry_pi_boot_dev | default('', true) | trim != ''
+
 - name: Mount boot
   ansible.posix.mount:
     path: "{{ james_on_rpi_config_dir }}"
     state: mounted
-    src: "{{ raspberry_pi_boot_dev }}"
+    src: "{{ james_on_rpi_rpi_boot_dev }}"
     fstype: vfat
   changed_when: false
   become: true
@@ -36,7 +41,7 @@
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir,gpio_pin="
-    line: "dtoverlay=gpio-ir,gpio_pin={{ james2_gpio_ir_rx_pin }}"
+    line: "dtoverlay=gpio-ir,gpio_pin={{ james_on_rpi_gpio_ir_rx_pin }}"
     insertafter: "^# Uncomment this to enable the lirc-rpi module"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
@@ -47,7 +52,7 @@
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir-tx,gpio_pin="
-    line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james2_gpio_ir_tx_pin }}"
+    line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james_on_rpi_gpio_ir_tx_pin }}"
     insertafter: "^dtoverlay=gpio-ir,gpio_pin"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
@@ -61,8 +66,8 @@
     owner: root
     group: root
     mode: "0644"
-  loop: "{{ james2_evdev_remotes }}"
-  when: james2_evdev_remotes is iterable
+  loop: "{{ james_on_rpi_evdev_remotes }}"
+  when: james_on_rpi_evdev_remotes is iterable
   become: true
   become_user: root
 
@@ -77,7 +82,7 @@
       -s $(/usr/bin/grep ir-receiver /proc/bus/input/devices | /usr/bin/cut -d / -f 6)
       -c
       >/dev/null 2>&1
-  when: james2_evdev_remotes is iterable
+  when: james_on_rpi_evdev_remotes is iterable
   notify: Reboot required
   become: true
   become_user: root
@@ -93,10 +98,10 @@
       -s $(/usr/bin/grep ir-receiver /proc/bus/input/devices | /usr/bin/cut -d / -f 6)
       -w /etc/rc_keymaps/{{ item }}
       >/dev/null 2>&1
-  loop: "{{ james2_evdev_remotes }}"
+  loop: "{{ james_on_rpi_evdev_remotes }}"
   loop_control:
     index_var: my_idx
-  when: james2_evdev_remotes is iterable
+  when: james_on_rpi_evdev_remotes is iterable
   notify: Reboot required
   become: true
   become_user: root
@@ -108,6 +113,6 @@
   ansible.builtin.pip:
     name:
       - evdev
-    virtualenv: "{{ james2_install_dir }}/venv"
+    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
   become: true
   become_user: "{{ james_os_user }}"

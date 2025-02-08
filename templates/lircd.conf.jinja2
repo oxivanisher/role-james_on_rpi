@@ -9,7 +9,7 @@
 # why the ansible role is merging the configs at the bottom of this file
 include "lircd.conf.d/*.conf"
 
-{% for remote in james2_evdev_remotes | default([]) %}
+{% for remote in james_on_rpi_evdev_remotes | default([]) %}
 # content from file {{ remote }}
 {% include './files/remotes/' + remote %}
 {% endfor %}

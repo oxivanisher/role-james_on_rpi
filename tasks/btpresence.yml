@@ -24,6 +24,6 @@
     name:
       # revert to PyBluez when https://github.com/pybluez/pybluez/issues/416 is closed
       - git+https://github.com/pybluez/pybluez.git@master
-    virtualenv: "{{ james2_install_dir }}/venv"
+    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
   become: true
   become_user: root

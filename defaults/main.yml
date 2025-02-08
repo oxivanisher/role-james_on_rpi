@@ -1,16 +1,16 @@
 ---
-james2_install_dir: /opt/JamesII
-james2_cli_user: pi
-james2_git_branch: master
+james_on_rpi_install_dir: /opt/JamesII
+james_on_rpi_cli_user: pi
+james_on_rpi_git_branch: master
 
-james2_host: james.example.lan
-james2_vhost: james2
-james2_user: james2
-james2_password: YOURPASSWORD
-james2_port: 5672
-james2_fallbackport: 15672
+james_on_rpi_rabbitmq_server: james.example.lan
+james_on_rpi_rabbitmq_vhost: james2
+james_on_rpi_rabbitmq_user: james2
+james_on_rpi_rabbitmq_password: YOURPASSWORD
+james_on_rpi_rabbitmq_port: 5672
+james_on_rpi_rabbitmq_fallbackport: 15672
 
-james2_features:
+james_on_rpi_features:
   []
   # - lircd
   # - i2c
@@ -20,11 +20,11 @@ james2_features:
   # - usb_mpc_remote
   # - btpresence
 
-james2_gpio_ir_rx_pin: 25
-james2_gpio_ir_tx_pin: 4
+james_on_rpi_gpio_ir_rx_pin: 25
+james_on_rpi_gpio_ir_tx_pin: 4
 
-james2_evdev_remotes: []
+james_on_rpi_evdev_remotes: []
 
-james2_lircd_default_device: auto
+james_on_rpi_lircd_default_device: auto
 
-raspberry_pi_boot_dev: /dev/mmcblk0p1
+james_on_rpi_rpi_boot_dev: /dev/mmcblk0p1
