@@ -32,7 +32,7 @@ Role Variables
 | james_on_rpi_gpio_ir_tx_pin | Raspberry Pi GPIO pin for IR TX    | `4`          |
 | james_on_rpi_evdev_remotes  | Current available files: <br> `atv_bedroom`, `atv_livingroom`, `atv_old_livingroom`   | `[]`          |
 | james_on_rpi_lircd_default_device  | Set the LIRC default device | `auto`          |
-| james_on_rpi_rpi_boot_dev | The boot device where the `config.txt` is located. Will be overwritten if `raspberry_pi_boot_dev` is set! | `/de`/mmcblk0p1` |
+| james_on_rpi_rpi_boot_dev | The boot device where the `config.txt` is located. Will be overwritten if `raspberry_pi_boot_dev` is set! | `/dev/mmcblk0p1` |
 
 
 The `evdev` stuff uses the GPIO numbers. Please be aware, that there are three (!) pin numbering schemes. Find more information about this in the [JamesII Readme](https://github.com/oxivanisher/JamesII).
