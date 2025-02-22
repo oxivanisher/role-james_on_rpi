@@ -4,3 +4,6 @@
 {{ james_on_rpi_os_user }}             ALL=(ALL) NOPASSWD: /bin/chmod
 {{ james_on_rpi_os_user }}             ALL=(ALL) NOPASSWD: /usr/bin/script
 {{ james_on_rpi_os_user }}             ALL=(ALL) NOPASSWD: /bin/kill
+{{ james_on_rpi_os_user }}             ALL=(ALL) NOPASSWD: {{ james_on_rpi_install_dir }}/venv/bin/python
+{{ james_on_rpi_os_user }}             ALL=(ALL) NOPASSWD: {{ james_on_rpi_install_dir }}/venv/bin/python3
+{{ james_on_rpi_os_user }}             ALL=(ALL) NOPASSWD: {{ james_on_rpi_install_dir }}/james.py
