@@ -64,7 +64,7 @@
   ansible.builtin.pip:
     requirements: "{{ james_on_rpi_install_dir }}/requirements.txt"
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
-    virtualenv_command: /usr/bin/python3 -m venv
+    # virtualenv_command: /usr/bin/python3 -m venv
   become: true
   become_user: "{{ james_on_rpi_os_user }}"
 
