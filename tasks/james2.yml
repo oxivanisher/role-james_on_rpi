@@ -33,8 +33,8 @@
   ansible.builtin.file:
     state: directory
     path: "{{ james_on_rpi_install_dir }}"
-    owner: "{{ james_os_user }}"
-    group: "{{ james_os_user }}"
+    owner: "{{ james_on_rpi_os_user }}"
+    group: "{{ james_on_rpi_os_user }}"
     mode: "0755"
   become: true
   become_user: root
@@ -47,14 +47,14 @@
     update: true
     version: "{{ james_on_rpi_git_branch }}"
   become: true
-  become_user: "{{ james_os_user }}"
+  become_user: "{{ james_on_rpi_os_user }}"
   notify: Restart james2
 
 - name: Fixing git permissions
   ansible.builtin.file:
     path: "{{ james_on_rpi_install_dir }}/.git/FETCH_HEAD"
-    owner: "{{ james_os_user }}"
-    group: "{{ james_os_user }}"
+    owner: "{{ james_on_rpi_os_user }}"
+    group: "{{ james_on_rpi_os_user }}"
     mode: "0644"
   failed_when: false
   become: true
@@ -66,14 +66,14 @@
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
     virtualenv_command: /usr/bin/python3 -m venv
   become: true
-  become_user: "{{ james_os_user }}"
+  become_user: "{{ james_on_rpi_os_user }}"
 
 - name: Deploy broker cfg for JamesII
   ansible.builtin.template:
     src: broker.yaml.jinja2
     dest: "{{ james_on_rpi_install_dir }}/config/broker.yaml"
-    owner: "{{ james_os_user }}"
-    group: "{{ james_os_user }}"
+    owner: "{{ james_on_rpi_os_user }}"
+    group: "{{ james_on_rpi_os_user }}"
     mode: "0640"
   notify: Restart james2
   become: true

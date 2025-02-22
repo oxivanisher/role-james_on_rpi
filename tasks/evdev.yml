@@ -115,4 +115,4 @@
       - evdev
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
   become: true
-  become_user: "{{ james_os_user }}"
+  become_user: "{{ james_on_rpi_os_user }}"

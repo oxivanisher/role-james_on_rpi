@@ -27,7 +27,7 @@ event $keyboard0 ordered "$PREVIOUSSONG" {
   # exec /usr/bin/mpc prev
 
   exec /usr/bin/mpc clear
-  exec /usr/bin/mpc add http://mp3.radiobern1.ch/radiobern1128k
+  exec /usr/bin/mpc add http://intranet.thunderbluff.lan/m3u/virginrock.m3u
   exec /usr/bin/mpc play
 
 }
@@ -52,6 +52,6 @@ event $keyboard1 ordered "$PREVIOUSSONG" {
   # exec /usr/bin/mpc prev
 
   exec /usr/bin/mpc clear
-  exec /usr/bin/mpc add http://mp3.radiobern1.ch/radiobern1128k
+  exec /usr/bin/mpc add http://intranet.thunderbluff.lan/m3u/virginrock.m3u
   exec /usr/bin/mpc play
 }

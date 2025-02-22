@@ -78,9 +78,9 @@
   become: true
   become_user: root
 
-- name: "Adding existing user to group audio: {{ james_os_user }}"
+- name: "Adding existing user to group audio: {{ james_on_rpi_os_user }}"
   ansible.builtin.user:
-    name: "{{ james_os_user }}"
+    name: "{{ james_on_rpi_os_user }}"
     groups: audio
     append: true
   become: true
@@ -179,4 +179,4 @@
       - python-mpd2
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
   become: true
-  become_user: "{{ james_os_user }}"
+  become_user: "{{ james_on_rpi_os_user }}"

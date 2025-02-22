@@ -4,17 +4,11 @@
   ansible.builtin.getent:
     database: passwd
 
-- name: Setting default user to xbian
-  ansible.builtin.set_fact:
-    james_os_user: xbian
-  when: ansible_distribution|lower == "xbian"
-  become: true
-  become_user: root
-
-- name: Setting default user to pi
-  ansible.builtin.set_fact:
-    james_os_user: pi
-  when: ansible_distribution|lower == "debian"
+- name: Ensure the JamesII user exists
+  ansible.builtin.user:
+    name: "{{ james_on_rpi_os_user }}"
+    createhome: true
+    state: present
   become: true
   become_user: root
 

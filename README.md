@@ -3,6 +3,7 @@ james_on_rpi
 [![Ansible Lint](https://github.com/oxivanisher/role-james_on_rpi/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-james_on_rpi/actions/workflows/ansible-lint.yml)
 
 This role installs and configures [JamesII](https://github.com/oxivanisher/JamesII) nodes on Raspberry Pis.
+It theoretically supports basic JamesII installation on "normal" PCs, but without any modules.
 
 Notes
 -----
@@ -21,6 +22,7 @@ Role Variables
 |---------------|--------------------------------------|---------------|
 | james_on_rpi_install_dir  | Where will JamesII be installed  | `/opt/JamesII`          |
 | james_on_rpi_cli_user  | The Linux cli user to run the interactive james command (sudo config) | `pi`          |
+| james_on_rpi_os_user   | The OS user james will be installed for. If it not already exists, it will be created. | `james` |
 | james_on_rpi_git_branch  | Git branch to checkout from Github | `master`          |
 | james_on_rpi_rabbitmq_server  | Rabbit MQ server name    | `james.example.lan`          |
 | james_on_rpi_rabbitmq_vhost  | The Rabbit MQ vhost to use  | `james2`          |
