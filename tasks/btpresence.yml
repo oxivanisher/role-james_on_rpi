@@ -20,10 +20,9 @@
 
 - name: Install python requirements for bluetooth
   ansible.builtin.pip:
-    virtualenv_python: python3
     name:
       # revert to PyBluez when https://github.com/pybluez/pybluez/issues/416 is closed
       - git+https://github.com/pybluez/pybluez.git@master
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
   become: true
-  become_user: root
+  become_user: "{{ james_on_rpi_os_user }}"

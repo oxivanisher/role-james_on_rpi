@@ -12,6 +12,8 @@
     name: "{{ james_on_rpi_os_user }}"
     groups: i2c
     append: true
+  become: true
+  become_user: root
 
 # ensure mounted boot
 - name: Override config.txt location for Raspberry Pi OS version before bookworm
@@ -31,6 +33,8 @@
     src: "{{ james_on_rpi_rpi_boot_dev }}"
     fstype: vfat
   changed_when: false
+  become: true
+  become_user: root
 
 - name: Configure config.txt for lirc rx
   ansible.builtin.lineinfile:
@@ -40,6 +44,8 @@
     insertafter: "^# Uncomment some or all of these to enable the optional hardware interfaces"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
 
 - name: Ensure i2c_dev module is loaded
   ansible.builtin.lineinfile:
@@ -48,16 +54,21 @@
     line: "i2c_dev"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
+  become: true
+  become_user: root
 
 - name: "Adding existing user to group audio: {{ james_on_rpi_os_user }}"
   ansible.builtin.user:
     name: "{{ james_on_rpi_os_user }}"
     groups: audio
     append: true
+  become: true
+  become_user: root
 
 - name: Install python requirements for i2c
   ansible.builtin.pip:
-    virtualenv_python: python3
     name:
       - smbus2
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
+  become: true
+  become_user: "{{ james_on_rpi_os_user }}"
