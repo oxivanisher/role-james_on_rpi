@@ -47,7 +47,9 @@
 # configure usb_mpc_remote
 - name: Import tasks from usb_mpc_remote.yml
   ansible.builtin.import_tasks: usb_mpc_remote.yml
-  when: "'usb_mpc_remote' in james_on_rpi_features"
+  when:
+    - ansible_architecture|lower in james_on_rpi_arm_versions
+    - "'usb_mpc_remote' in james_on_rpi_features"
 
 # install motion (plugin motion)
 - name: Import tasks from motion.yml

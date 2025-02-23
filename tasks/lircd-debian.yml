@@ -37,6 +37,7 @@
   become: true
   become_user: root
 
+# this is very old and can be done way nicer ... but its probably going to be removed anyways
 - name: Rename devinput.lircd.conf
   ansible.builtin.command: mv /etc/lirc/lircd.conf.d/devinput.lircd.conf /etc/lirc/lircd.conf.d/devinput.lircd.conf.orig
   changed_when: false

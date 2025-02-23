@@ -1,3 +1,7 @@
 ---
 # vars file for james_on_rpi
 james_on_rpi_config_dir: /boot/firmware
+james_on_rpi_arm_versions:
+  - armv6l
+  - armv7l
+  - aarch64
