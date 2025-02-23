@@ -41,7 +41,7 @@
   become: true
   become_user: root
 
-- name: Configure config.txt for lirc rx
+- name: Configure config.txt for i2c
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtparam=i2c_arm="

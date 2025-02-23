@@ -42,7 +42,7 @@
   become_user: root
 
 # configuring RPI GPIO
-- name: Configure config.txt for lirc rx
+- name: Configure config.txt for evdev infrared rx
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir,gpio_pin="
@@ -54,7 +54,7 @@
   become: true
   become_user: root
 
-- name: Configure config.txt for lirc tx
+- name: Configure config.txt for evdev infrared tx
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtoverlay=gpio-ir-tx,gpio_pin="

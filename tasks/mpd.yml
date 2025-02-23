@@ -112,7 +112,7 @@
   become: true
   become_user: root
 
-- name: Configure config.txt for lirc rx
+- name: Configure config.txt to enable audio
   ansible.builtin.lineinfile:
     path: "{{ james_on_rpi_config_dir }}/config.txt"
     regexp: "^dtparam=audio="
@@ -125,7 +125,7 @@
   become: true
   become_user: root
 
-- name: Configure config.txt for lirc rx # noqa no-tabs
+- name: Configure bind address for mpd # noqa no-tabs
   ansible.builtin.lineinfile:
     path: /etc/mpd.conf
     regexp: "^bind_to_address"
