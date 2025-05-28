@@ -1,5 +1,11 @@
 ---
 ## Backport from kaliko for buster and bullseye
+- name: Install python requirements for mpd-client
+  ansible.builtin.pip:
+    requirements: "{{ james_on_rpi_install_dir }}/requirements-mpd-client.txt"
+    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
+  become: true
+  become_user: "{{ james_on_rpi_os_user }}"
 
 - name: Setup mpd for buster and bullseye with kaliko repo for current mpd
   when: ansible_distribution_release in ['buster','bullseye']

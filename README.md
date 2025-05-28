@@ -9,6 +9,7 @@ Notes
 -----
 
 * Please be aware, that the `ebindkeys` functionality "conflicts" with the `infrared` stuff for james. It does not really conflict as such, but the current configuration in `files/ebindkeysrc` also triggers for events over infrared and so triggers both/twice.
+* Python dependencies for the `httpserver`, `google-calendar` and `jabber` plugin are currently NOT handled.
 
 Requirements
 ------------
@@ -30,7 +31,7 @@ Role Variables
 | james_on_rpi_rabbitmq_password  | Rabbit MQ password    | `YOURPASSWORD`          |
 | james_on_rpi_rabbitmq_port  | Rabbit MQ port    | `5672`          |
 | james_on_rpi_rabbitmq_fallbackport | Rabbit MQ fallback port    | `15672`          |
-| james_on_rpi_features  | JamesII features to configure. List options are: <br> `i2c`, `mpd`, `evdev`, `usb_mpc_remote`, `btpresence`  | `[]`          |
+| james_on_rpi_features  | JamesII features to configure. List options are: <br> `btpresence`, `caldav`, `evdev`, `i2c`, `motion`, `mpd`, `transmision`, `usb_mpc_remote`  | `[]`          |
 | james_on_rpi_gpio_ir_rx_pin | Raspberry Pi GPIO pin for IR RX | `25`          |
 | james_on_rpi_gpio_ir_tx_pin | Raspberry Pi GPIO pin for IR TX    | `4`          |
 | james_on_rpi_evdev_remotes  | Current available files: <br> `atv_bedroom`, `atv_livingroom`, `atv_old_livingroom`   | `[]`          |

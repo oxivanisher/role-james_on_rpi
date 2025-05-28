@@ -13,13 +13,16 @@ james_on_rpi_rabbitmq_fallbackport: 15672
 
 james_on_rpi_features:
   []
-  # - lircd
-  # - i2c
-  # - mpd
-  # - motion
-  # - evdev
-  # - usb_mpc_remote
   # - btpresence
+  # - caldav
+  # - evdev
+  # - i2c
+  # - lircd
+  # - motion
+  # - mpd
+  # - raspberry
+  # - transmission
+  # - usb_mpc_remote
 
 james_on_rpi_gpio_ir_rx_pin: 25
 james_on_rpi_gpio_ir_tx_pin: 4

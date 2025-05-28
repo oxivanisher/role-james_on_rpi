@@ -29,20 +29,40 @@
 - name: Import tasks from james2.yml
   ansible.builtin.import_tasks: james2.yml
 
-# install evdev (plugin evdev-client)
+# install bluetooth (plugin presence)
+- name: Import tasks from btpresence.yml
+  ansible.builtin.import_tasks: btpresence.yml
+  when: "'btpresence' in james_on_rpi_features"
+
+# install caldav (plugin caldav-calendar)
+- name: Import tasks from caldav.yml
+  ansible.builtin.import_tasks: caldav.yml
+  when: "'caldav' in james_on_rpi_features"
+
+# install evdev (plugin evdev-plugin)
 - name: Import tasks from evdev.yml
   ansible.builtin.import_tasks: evdev.yml
   when: "'evdev' in james_on_rpi_features"
+
+# install i2c (plugin rgb-led)
+- name: Import tasks from i2c.yml
+  ansible.builtin.import_tasks: i2c.yml
+  when: "'i2c' in james_on_rpi_features"
+
+# install motion (plugin motion)
+- name: Import tasks from motion.yml
+  ansible.builtin.import_tasks: motion.yml
+  when: "'motion' in james_on_rpi_features"
 
 # install mpd (plugin mpd-client)
 - name: Import tasks from mpd.yml
   ansible.builtin.import_tasks: mpd.yml
   when: "'mpd' in james_on_rpi_features"
 
-# install i2c (plugin rgb-led)
-- name: Import tasks from i2c.yml
-  ansible.builtin.import_tasks: i2c.yml
-  when: "'i2c' in james_on_rpi_features"
+# install transmission (plugin transmission)
+- name: Import tasks from transmission.yml
+  ansible.builtin.import_tasks: transmission.yml
+  when: "'transmission' in james_on_rpi_features"
 
 # configure usb_mpc_remote
 - name: Import tasks from usb_mpc_remote.yml
@@ -50,13 +70,3 @@
   when:
     - ansible_architecture|lower in james_on_rpi_arm_versions
     - "'usb_mpc_remote' in james_on_rpi_features"
-
-# install motion (plugin motion)
-- name: Import tasks from motion.yml
-  ansible.builtin.import_tasks: motion.yml
-  when: "'motion' in james_on_rpi_features"
-
-# install bluetooth (plugin presence)
-- name: Import tasks from btpresence.yml
-  ansible.builtin.import_tasks: btpresence.yml
-  when: "'btpresence' in james_on_rpi_features"

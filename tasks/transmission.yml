@@ -1,0 +1,7 @@
+---
+- name: Install python requirements for transmission
+  ansible.builtin.pip:
+    requirements: "{{ james_on_rpi_install_dir }}/requirements-transmission.txt"
+    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
+  become: true
+  become_user: "{{ james_on_rpi_os_user }}"

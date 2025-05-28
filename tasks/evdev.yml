@@ -1,6 +1,13 @@
 ---
 # the lirc package is ultimatively stupid and fails at installation because the .dist file is not renamed to "non dist" if no other file is available ...
 # so, the lirc package can not be installed by ansible without very big fuckery ... sry you had to come here and find this comment ... AGAIN
+- name: Install python requirements for evdev-plugin
+  ansible.builtin.pip:
+    requirements: "{{ james_on_rpi_install_dir }}/requirements-evdev-plugin.txt"
+    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
+  become: true
+  become_user: "{{ james_on_rpi_os_user }}"
+
 - name: Remove old lirc JamesII packages
   ansible.builtin.package:
     name: lirc
