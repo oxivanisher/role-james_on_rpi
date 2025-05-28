@@ -1,7 +1,7 @@
 ---
-- name: Install python requirements for transmission
+- name: Install python requirements for raspberry
   ansible.builtin.pip:
-    requirements: "{{ james_on_rpi_install_dir }}/requirements-transmission.txt"
+    requirements: "{{ james_on_rpi_install_dir }}/requirements-raspberry.txt"
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
   notify: Restart james2
   become: true

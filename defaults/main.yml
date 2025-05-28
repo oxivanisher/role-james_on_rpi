@@ -16,11 +16,11 @@ james_on_rpi_features:
   # - btpresence
   # - caldav
   # - evdev
-  # - i2c
   # - lircd
   # - motion
   # - mpd
   # - raspberry
+  # - rgb-led
   # - transmission
   # - usb_mpc_remote
 

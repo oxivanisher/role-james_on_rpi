@@ -3,5 +3,6 @@
   ansible.builtin.pip:
     requirements: "{{ james_on_rpi_install_dir }}/requirements-caldav-calendar.txt"
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
+  notify: Restart james2
   become: true
   become_user: "{{ james_on_rpi_os_user }}"

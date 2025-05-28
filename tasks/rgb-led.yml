@@ -1,4 +1,12 @@
 ---
+- name: Install python requirements for rgb-led
+  ansible.builtin.pip:
+    requirements: "{{ james_on_rpi_install_dir }}/requirements-rgb-led.txt"
+    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
+  notify: Restart james2
+  become: true
+  become_user: "{{ james_on_rpi_os_user }}"
+
 - name: Install required JamesII packages
   ansible.builtin.package:
     name:
@@ -71,11 +79,3 @@
     append: true
   become: true
   become_user: root
-
-- name: Install python requirements for i2c
-  ansible.builtin.pip:
-    name:
-      - smbus2
-    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
-  become: true
-  become_user: "{{ james_on_rpi_os_user }}"

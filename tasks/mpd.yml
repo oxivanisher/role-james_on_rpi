@@ -4,6 +4,7 @@
   ansible.builtin.pip:
     requirements: "{{ james_on_rpi_install_dir }}/requirements-mpd-client.txt"
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
+  notify: Restart james2
   become: true
   become_user: "{{ james_on_rpi_os_user }}"
 
@@ -185,11 +186,3 @@
     mode: "0644"
   become: true
   become_user: root
-
-- name: Install python requirements for mpd
-  ansible.builtin.pip:
-    name:
-      - python-mpd2
-    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
-  become: true
-  become_user: "{{ james_on_rpi_os_user }}"

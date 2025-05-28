@@ -5,15 +5,9 @@
   ansible.builtin.pip:
     requirements: "{{ james_on_rpi_install_dir }}/requirements-evdev-plugin.txt"
     virtualenv: "{{ james_on_rpi_install_dir }}/venv"
+  notify: Restart james2
   become: true
   become_user: "{{ james_on_rpi_os_user }}"
-
-- name: Remove old lirc JamesII packages
-  ansible.builtin.package:
-    name: lirc
-    state: absent
-  become: true
-  become_user: root
 
 - name: Install required packages
   ansible.builtin.package:
@@ -122,11 +116,3 @@
 
 - name: Flush handlers so the IR device is present for the next step
   ansible.builtin.meta: flush_handlers
-
-- name: Install python requirements for evdev
-  ansible.builtin.pip:
-    name:
-      - evdev
-    virtualenv: "{{ james_on_rpi_install_dir }}/venv"
-  become: true
-  become_user: "{{ james_on_rpi_os_user }}"
