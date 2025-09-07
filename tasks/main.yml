@@ -10,7 +10,6 @@
     system: true
     createhome: true
     home: "/var/lib/{{ james_on_rpi_os_user }}"
-    groups: "{{ james_on_rpi_user_groups | select('in', ansible_facts.getent_group.keys()) | list }}"
     state: present
   become: true
   become_user: root
