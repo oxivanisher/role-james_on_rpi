@@ -19,24 +19,25 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-| Name          | Comment                              | Default value |
-|---------------|--------------------------------------|---------------|
-| james_on_rpi_install_dir  | Where will JamesII be installed  | `/opt/JamesII`          |
-| james_on_rpi_cli_user  | The Linux cli user to run the interactive james command (sudo config) | `pi`          |
-| james_on_rpi_os_user   | The OS user james will be installed for. If it not already exists, it will be created. | `james` |
-| james_on_rpi_git_branch  | Git branch to checkout from Github | `master`          |
-| james_on_rpi_rabbitmq_server  | Rabbit MQ server name    | `james.example.lan`          |
-| james_on_rpi_rabbitmq_vhost  | The Rabbit MQ vhost to use  | `james2`          |
-| james_on_rpi_rabbitmq_user  | Rabbit MQ username  | `james2`          |
-| james_on_rpi_rabbitmq_password  | Rabbit MQ password    | `YOURPASSWORD`          |
-| james_on_rpi_rabbitmq_port  | Rabbit MQ port    | `5672`          |
-| james_on_rpi_rabbitmq_fallbackport | Rabbit MQ fallback port    | `15672`          |
-| james_on_rpi_features  | JamesII features to configure. List options are: <br> `btpresence`, `caldav`, `evdev`, `motion`, `mpd`, `raspberry`, `rgb-led`, `transmision`, `usb_mpc_remote`  | `[]`          |
-| james_on_rpi_gpio_ir_rx_pin | Raspberry Pi GPIO pin for IR RX | `25`          |
-| james_on_rpi_gpio_ir_tx_pin | Raspberry Pi GPIO pin for IR TX    | `4`          |
-| james_on_rpi_evdev_remotes  | Current available files: <br> `atv_bedroom`, `atv_livingroom`, `atv_old_livingroom`   | `[]`          |
-| james_on_rpi_lircd_default_device  | Set the LIRC default device | `auto`          |
-| james_on_rpi_rpi_boot_dev | The boot device where the `config.txt` is located. Will be overwritten if `raspberry_pi_boot_dev` is set! | `/dev/mmcblk0p1` |
+| Name                               | Comment                                                                                                                                                         | Default value       |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| james_on_rpi_install_dir           | Where will JamesII be installed                                                                                                                                 | `/opt/JamesII`      |
+| james_on_rpi_cli_user              | The Linux cli user to run the interactive james command (sudo config)                                                                                           | `pi`                |
+| james_on_rpi_allowed_cli_users     | Other OS users allowed to run the james `cli.sh` script (sudo)                                                                                                  | `[]`                |
+| james_on_rpi_os_user               | The OS user james will be installed for. If it not already exists, it will be created.                                                                          | `james`             |
+| james_on_rpi_git_branch            | Git branch to checkout from Github                                                                                                                              | `master`            |
+| james_on_rpi_rabbitmq_server       | Rabbit MQ server name                                                                                                                                           | `james.example.lan` |
+| james_on_rpi_rabbitmq_vhost        | The Rabbit MQ vhost to use                                                                                                                                      | `james2`            |
+| james_on_rpi_rabbitmq_user         | Rabbit MQ username                                                                                                                                              | `james2`            |
+| james_on_rpi_rabbitmq_password     | Rabbit MQ password                                                                                                                                              | `YOURPASSWORD`      |
+| james_on_rpi_rabbitmq_port         | Rabbit MQ port                                                                                                                                                  | `5672`              |
+| james_on_rpi_rabbitmq_fallbackport | Rabbit MQ fallback port                                                                                                                                         | `15672`             |
+| james_on_rpi_features              | JamesII features to configure. List options are: <br> `btpresence`, `caldav`, `evdev`, `motion`, `mpd`, `raspberry`, `rgb-led`, `transmision`, `usb_mpc_remote` | `[]`                |
+| james_on_rpi_gpio_ir_rx_pin        | Raspberry Pi GPIO pin for IR RX                                                                                                                                 | `25`                |
+| james_on_rpi_gpio_ir_tx_pin        | Raspberry Pi GPIO pin for IR TX                                                                                                                                 | `4`                 |
+| james_on_rpi_evdev_remotes         | Current available files: <br> `atv_bedroom`, `atv_livingroom`, `atv_old_livingroom`                                                                             | `[]`                |
+| james_on_rpi_lircd_default_device  | Set the LIRC default device                                                                                                                                     | `auto`              |
+| james_on_rpi_rpi_boot_dev          | The boot device where the `config.txt` is located. Will be overwritten if `raspberry_pi_boot_dev` is set!                                                       | `/dev/mmcblk0p1`    |
 
 
 The `evdev` stuff uses the GPIO numbers. Please be aware, that there are three (!) pin numbering schemes. Find more information about this in the [JamesII Readme](https://github.com/oxivanisher/JamesII).

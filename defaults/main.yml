@@ -1,6 +1,7 @@
 ---
 james_on_rpi_install_dir: /opt/JamesII
 james_on_rpi_cli_user: pi
+james_on_rpi_allowed_cli_users: []
 james_on_rpi_os_user: james
 james_on_rpi_git_branch: master
 

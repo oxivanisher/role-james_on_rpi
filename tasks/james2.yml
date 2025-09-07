@@ -95,7 +95,7 @@
   ansible.builtin.getent:
     database: passwd
 
-- name: "Configure james cli sudo for user {{ james_on_rpi_cli_user }}"
+- name: Deploy sudo cfg for JamesII cli
   ansible.builtin.template:
     src: james2-cli.jinja2
     dest: /etc/sudoers.d/james2-cli
@@ -103,7 +103,6 @@
     group: "root"
     mode: "0644"
     validate: /usr/sbin/visudo -cf %s
-  when: james_on_rpi_cli_user in getent_passwd
   become: true
   become_user: root
 
