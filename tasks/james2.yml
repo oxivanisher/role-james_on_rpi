@@ -35,7 +35,7 @@
     path: "{{ james_on_rpi_install_dir }}"
     owner: "{{ james_on_rpi_os_user }}"
     group: "{{ james_on_rpi_os_user }}"
-    mode: "0750"
+    mode: "0755"
   become: true
   become_user: root
 
@@ -91,16 +91,10 @@
   become: true
   become_user: root
 
-- name: Looking up users
-  ansible.builtin.getent:
-    database: passwd
-
 - name: Link cli script to /usr/local/bin/james
   ansible.builtin.file:
     src: "{{ james_on_rpi_install_dir }}/src/cli.sh"
     dest: /usr/local/bin/james
-    owner: "root"
-    group: "root"
     state: link
   become: true
   become_user: root
