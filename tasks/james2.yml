@@ -95,6 +95,14 @@
   ansible.builtin.getent:
     database: passwd
 
+- name: Link cli script to /usr/local/bin/james
+  ansible.builtin.file:
+    src: "{{ james_on_rpi_install_dir }}/src/cli.sh"
+    dest: /usr/local/bin/james
+    owner: "root"
+    group: "root"
+    state: link
+
 - name: Deploy sudo cfg for JamesII cli
   ansible.builtin.template:
     src: james2-cli.jinja2

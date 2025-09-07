@@ -2,5 +2,5 @@
 
 # JamesII cli users
 {% for user in james_on_rpi_cli_users %}
-{{ user }}             ALL=(ALL) NOPASSWD: {{ james_on_rpi_install_dir }}/src/cli.sh
+{{ user }}             ALL=(ALL) NOPASSWD: /usr/local/bin/james
 {% endfor %}
