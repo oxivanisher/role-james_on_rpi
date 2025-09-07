@@ -1,13 +1,6 @@
 # {{ ansible_managed }}
 
-{% if james_on_rpi_cli_user in getent_passwd %}
-# JamesII system user
-{{ james_on_rpi_cli_user }}             ALL=(ALL) NOPASSWD: {{ james_on_rpi_install_dir }}/src/cli.sh
-{% endif %}
-
-{% if james_on_rpi_allowed_cli_users | length > 1 %}
-# Additional JamesII cli users
-{% for user in james_on_rpi_allowed_cli_users %}
+# JamesII cli users
+{% for user in james_on_rpi_cli_users %}
 {{ user }}             ALL=(ALL) NOPASSWD: {{ james_on_rpi_install_dir }}/src/cli.sh
 {% endfor %}
-{% endif %}
