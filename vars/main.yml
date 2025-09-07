@@ -5,3 +5,12 @@ james_on_rpi_arm_versions:
   - armv6l
   - armv7l
   - aarch64
+james_on_rpi_user_groups:
+  - audio
+  - dialout
+  - i2c
+  - input
+  - gpio
+  - netdev
+  - plugdev
+  - spi
