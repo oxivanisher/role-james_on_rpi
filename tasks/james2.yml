@@ -102,6 +102,8 @@
     owner: "root"
     group: "root"
     state: link
+  become: true
+  become_user: root
 
 - name: Deploy sudo cfg for JamesII cli
   ansible.builtin.template:
