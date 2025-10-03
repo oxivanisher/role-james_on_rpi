@@ -65,7 +65,7 @@
   ansible.builtin.file:
     path: "{{ james_on_rpi_install_dir }}/venv"
     state: absent
-  when: james_on_rpi_rm_existing_venv
+  when: james_on_rpi_rm_existing_venv | bool
   become: true
   become_user: "{{ james_on_rpi_os_user }}"
 
