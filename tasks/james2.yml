@@ -63,7 +63,7 @@
 
 - name: Delete existing venv
   ansible.builtin.file:
-    path: james_on_rpi_rm_existing_venv
+    path: "{{ james_on_rpi_install_dir }}/venv"
     state: absent
   when: james_on_rpi_rm_existing_venv
   become: true
