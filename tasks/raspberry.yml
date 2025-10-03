@@ -3,6 +3,8 @@
   ansible.builtin.package:
     name: liblgpio-dev
     state: present
+  become: true
+  become_user: root
 
 - name: Install python requirements for raspberry
   ansible.builtin.pip:
