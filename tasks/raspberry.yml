@@ -1,7 +1,9 @@
 ---
 - name: Install dependencies
   ansible.builtin.package:
-    name: liblgpio-dev
+    name:
+      - liblgpio-dev
+      - swig
     state: present
   become: true
   become_user: root
