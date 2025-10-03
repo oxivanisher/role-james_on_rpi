@@ -31,4 +31,6 @@ james_on_rpi_evdev_remotes: []
 
 james_on_rpi_lircd_default_device: auto
 
+james_on_rpi_rm_existing_venv: false
+
 james_on_rpi_rpi_boot_dev: /dev/mmcblk0p1

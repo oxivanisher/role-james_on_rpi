@@ -61,6 +61,12 @@
   become: true
   become_user: root
 
+- name: Delete existing venv
+  ansible.bultin.file:
+    path: james_on_rpi_rm_existing_venv
+    state: absent
+  when: james_on_rpi_rm_existing_venv
+
 - name: Install python requirements
   ansible.builtin.pip:
     requirements: "{{ james_on_rpi_install_dir }}/requirements.txt"

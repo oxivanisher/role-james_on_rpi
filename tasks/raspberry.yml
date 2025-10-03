@@ -1,4 +1,9 @@
 ---
+- name: Install dependencies
+  ansible.builtin.package:
+    name: liblgpio-dev
+    state: present
+
 - name: Install python requirements for raspberry
   ansible.builtin.pip:
     requirements: "{{ james_on_rpi_install_dir }}/requirements-raspberry.txt"
