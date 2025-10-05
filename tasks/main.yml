@@ -1,9 +1,4 @@
 ---
-# get user
-- name: Looking up users
-  ansible.builtin.getent:
-    database: passwd
-
 - name: Ensure the JamesII user exists
   ansible.builtin.user:
     name: "{{ james_on_rpi_os_user }}"
