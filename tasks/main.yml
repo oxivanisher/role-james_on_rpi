@@ -9,24 +9,14 @@
   become: true
   become_user: root
 
-- name: Lookup user group
+- name: Gather james_on_rpi_os_user user infos
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ james_on_rpi_os_user }}"
+
+- name: Lookup home and group for james_on_rpi_os_user
   ansible.builtin.set_fact:
-    james_on_rpi_os_user_group: "{{ lookup('pipe', 'id -gn') }}"
-  become: true
-  become_user: "{{ james_on_rpi_os_user }}"
-
-# Depricated, delete when evdev is working
-# also remove the no longer required lirc cfg files under templates
-# install lircd (plugin lirc-client)
-# - name: Import tasks from lircd.yml
-#   ansible.builtin.import_tasks: lircd.yml
-#   when: "'lircd' in james_on_rpi_features"
-
-# - name: Install python requirements virtualenv
-#   ansible.builtin.pip:
-#     virtualenv_python: python3
-#     name:
-#       - virtualenv
+    james_on_rpi_os_user_group: "{{ getent_passwd[james_on_rpi_os_user][2] }}"
 
 # install james2
 - name: Import tasks from james2.yml
