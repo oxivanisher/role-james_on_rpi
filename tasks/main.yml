@@ -14,6 +14,12 @@
   become: true
   become_user: root
 
+- name: Lookup user group
+  ansible.builtin.set_fact:
+    james_on_rpi_os_user_group: "{{ lookup('pipe', 'id -gn') }}"
+  become: true
+  become_user: "{{ james_on_rpi_os_user }}"
+
 # Depricated, delete when evdev is working
 # also remove the no longer required lirc cfg files under templates
 # install lircd (plugin lirc-client)

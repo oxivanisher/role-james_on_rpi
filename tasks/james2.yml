@@ -35,7 +35,7 @@
     state: directory
     path: "{{ james_on_rpi_install_dir }}"
     owner: "{{ james_on_rpi_os_user }}"
-    group: "{{ james_on_rpi_os_user }}"
+    group: "{{ james_on_rpi_os_user_group }}"
     mode: "0755"
   become: true
   become_user: root
@@ -55,7 +55,7 @@
   ansible.builtin.file:
     path: "{{ james_on_rpi_install_dir }}/.git/FETCH_HEAD"
     owner: "{{ james_on_rpi_os_user }}"
-    group: "{{ james_on_rpi_os_user }}"
+    group: "{{ james_on_rpi_os_user_group }}"
     mode: "0644"
   failed_when: false
   become: true
@@ -82,7 +82,7 @@
     src: broker.yaml.jinja2
     dest: "{{ james_on_rpi_install_dir }}/config/broker.yaml"
     owner: "{{ james_on_rpi_os_user }}"
-    group: "{{ james_on_rpi_os_user }}"
+    group: "{{ james_on_rpi_os_user_group }}"
     mode: "0640"
   notify: Restart james2
   become: true
