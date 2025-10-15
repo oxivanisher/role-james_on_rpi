@@ -47,6 +47,11 @@
   ansible.builtin.import_tasks: mpd.yml
   when: "'mpd' in james_on_rpi_features"
 
+# install mqtt (plugin mqtt)
+- name: Import tasks from mqtt.yml
+  ansible.builtin.import_tasks: mqtt.yml
+  when: "'mqtt' in james_on_rpi_features"
+
 # install raspberry (plugin raspberry)
 - name: Import tasks from raspberry.yml
   ansible.builtin.import_tasks: raspberry.yml

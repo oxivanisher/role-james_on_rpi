@@ -19,6 +19,7 @@ james_on_rpi_features:
   # - lircd
   # - motion
   # - mpd
+  # - mqtt
   # - raspberry
   # - rgb-led
   # - transmission
