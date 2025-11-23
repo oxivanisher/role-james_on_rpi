@@ -9,7 +9,7 @@
   become_user: "{{ james_on_rpi_os_user }}"
 
 - name: Setup mpd for buster and bullseye with kaliko repo for current mpd
-  when: ansible_distribution_release in ['buster','bullseye']
+  when: ansible_facts.distribution_release in ['buster','bullseye']
   block:
     - name: Add the Kaliko APT key by package for buster and bullseye
       ansible.builtin.apt:
@@ -21,7 +21,7 @@
       ansible.builtin.apt_repository:
         repo: >
           deb [signed-by=/usr/share/keyrings/deb.kaliko.me.gpg]
-          https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main
+          https://deb.kaliko.me/raspbian-backports/ {{ ansible_facts.distribution_release }}-backports main
         state: present
         filename: kaliko
       become: true
@@ -30,7 +30,7 @@
     - name: Update apt cache for Kaliko repo in buster and bullseye
       ansible.builtin.apt:
         name: mpd
-        default_release: "{{ ansible_distribution_release }}-backports"
+        default_release: "{{ ansible_facts.distribution_release }}-backports"
         update_cache: true
         state: present
       become: true
@@ -48,7 +48,7 @@
 ## "Normal" mpd install starting from bookworm
 
 - name: Setup mpd for bookworm and onwards
-  when: ansible_distribution_release not in ['buster','bullseye']
+  when: ansible_facts.distribution_release not in ['buster','bullseye']
   block:
     - name: Remove remaining kaliko keyring
       ansible.builtin.apt:
@@ -61,7 +61,7 @@
       ansible.builtin.apt_repository:
         repo: >
           deb [signed-by=/usr/share/keyrings/deb.kaliko.me.gpg]
-          https://deb.kaliko.me/raspbian-backports/ {{ ansible_distribution_release }}-backports main
+          https://deb.kaliko.me/raspbian-backports/ {{ ansible_facts.distribution_release }}-backports main
         state: absent
         filename: kaliko
       become: true
@@ -98,14 +98,14 @@
   ansible.builtin.set_fact:
     james_on_rpi_config_dir: /boot
   when:
-    - ansible_architecture|lower in james_on_rpi_arm_versions
-    - ansible_distribution_major_version | int < 12
+    - ansible_facts.architecture|lower in james_on_rpi_arm_versions
+    - ansible_facts.distribution_major_version | int < 12
 
 - name: Override Raspberry PI boot device default since raspberry_pi_boot_dev is set
   ansible.builtin.set_fact:
     james_on_rpi_rpi_boot_dev: "{{ raspberry_pi_boot_dev }}"
   when:
-    - ansible_architecture|lower in james_on_rpi_arm_versions
+    - ansible_facts.architecture|lower in james_on_rpi_arm_versions
     - raspberry_pi_boot_dev | default('', true) | trim != ''
 
 - name: Mount boot
@@ -114,7 +114,7 @@
     state: mounted
     src: "{{ james_on_rpi_rpi_boot_dev }}"
     fstype: vfat
-  when: ansible_architecture|lower in james_on_rpi_arm_versions
+  when: ansible_facts.architecture|lower in james_on_rpi_arm_versions
   changed_when: false
   become: true
   become_user: root
@@ -125,7 +125,7 @@
     regexp: "^dtparam=audio="
     line: "dtparam=audio=on"
   when:
-    - ansible_architecture|lower in james_on_rpi_arm_versions
+    - ansible_facts.architecture|lower in james_on_rpi_arm_versions
     - "'hifiberry' not in group_names"
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
@@ -155,7 +155,7 @@
     name: mpd.socket
     state: stopped
     enabled: false
-  when: ansible_service_mgr == "systemd"
+  when: ansible_facts.service_mgr == "systemd"
   become: true
   become_user: root
 
@@ -164,7 +164,7 @@
     name: mpd.service
     state: started
     enabled: true
-  when: ansible_service_mgr == "systemd"
+  when: ansible_facts.service_mgr == "systemd"
   become: true
   become_user: root
 
@@ -173,7 +173,7 @@
     name: mpd
     state: started
     enabled: true
-  when: ansible_service_mgr == "upstart"
+  when: ansible_facts.service_mgr == "upstart"
   become: true
   become_user: root
 

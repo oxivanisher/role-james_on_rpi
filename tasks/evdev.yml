@@ -21,14 +21,14 @@
   ansible.builtin.set_fact:
     james_on_rpi_config_dir: /boot
   when:
-    - ansible_architecture|lower in james_on_rpi_arm_versions
-    - ansible_distribution_major_version | int < 12
+    - ansible_facts.architecture|lower in james_on_rpi_arm_versions
+    - ansible_facts.distribution_major_version | int < 12
 
 - name: Override Raspberry PI boot device default since raspberry_pi_boot_dev is set
   ansible.builtin.set_fact:
     james_on_rpi_rpi_boot_dev: "{{ raspberry_pi_boot_dev }}"
   when:
-    - ansible_architecture|lower in james_on_rpi_arm_versions
+    - ansible_facts.architecture|lower in james_on_rpi_arm_versions
     - raspberry_pi_boot_dev | default('', true) | trim != ''
 
 - name: Mount boot
@@ -37,7 +37,7 @@
     state: mounted
     src: "{{ james_on_rpi_rpi_boot_dev }}"
     fstype: vfat
-  when: ansible_architecture|lower in james_on_rpi_arm_versions
+  when: ansible_facts.architecture|lower in james_on_rpi_arm_versions
   changed_when: false
   become: true
   become_user: root
@@ -49,7 +49,7 @@
     regexp: "^dtoverlay=gpio-ir,gpio_pin="
     line: "dtoverlay=gpio-ir,gpio_pin={{ james_on_rpi_gpio_ir_rx_pin }}"
     insertafter: "^# Uncomment this to enable the lirc-rpi module"
-  when: ansible_architecture|lower in james_on_rpi_arm_versions
+  when: ansible_facts.architecture|lower in james_on_rpi_arm_versions
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
   become: true
@@ -61,7 +61,7 @@
     regexp: "^dtoverlay=gpio-ir-tx,gpio_pin="
     line: "dtoverlay=gpio-ir-tx,gpio_pin={{ james_on_rpi_gpio_ir_tx_pin }}"
     insertafter: "^dtoverlay=gpio-ir,gpio_pin"
-  when: ansible_architecture|lower in james_on_rpi_arm_versions
+  when: ansible_facts.architecture|lower in james_on_rpi_arm_versions
   notify: Reboot required
   ignore_errors: "{{ ansible_check_mode }}"
   become: true

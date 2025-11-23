@@ -127,7 +127,7 @@
     owner: root
     group: root
     mode: "0644"
-  when: ansible_service_mgr == "systemd"
+  when: ansible_facts.service_mgr == "systemd"
   notify: Restart james2
   become: true
   become_user: root
@@ -135,7 +135,7 @@
 - name: Reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
-  when: ansible_service_mgr == "systemd"
+  when: ansible_facts.service_mgr == "systemd"
   become: true
   become_user: root
 
@@ -144,7 +144,7 @@
     name: james2.service
     state: started
     enabled: true
-  when: ansible_service_mgr == "systemd"
+  when: ansible_facts.service_mgr == "systemd"
   become: true
   become_user: root
 
@@ -156,7 +156,7 @@
     owner: root
     group: root
     mode: "0644"
-  when: ansible_service_mgr == "upstart"
+  when: ansible_facts.service_mgr == "upstart"
   notify: Restart james2
   become: true
   become_user: root
@@ -166,6 +166,6 @@
     name: james2
     state: started
     enabled: true
-  when: ansible_service_mgr == "upstart"
+  when: ansible_facts.service_mgr == "upstart"
   become: true
   become_user: root

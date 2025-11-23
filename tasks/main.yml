@@ -16,7 +16,7 @@
 
 - name: Lookup home and group for james_on_rpi_os_user
   ansible.builtin.set_fact:
-    james_on_rpi_os_user_group: "{{ getent_passwd[james_on_rpi_os_user][2] }}"
+    james_on_rpi_os_user_group: "{{ ansible_facts.getent_passwd[james_on_rpi_os_user][2] }}"
 
 # install james2
 - name: Import tasks from james2.yml
@@ -71,5 +71,5 @@
 - name: Import tasks from usb_mpc_remote.yml
   ansible.builtin.import_tasks: usb_mpc_remote.yml
   when:
-    - ansible_architecture|lower in james_on_rpi_arm_versions
+    - ansible_facts.architecture|lower in james_on_rpi_arm_versions
     - "'usb_mpc_remote' in james_on_rpi_features"
